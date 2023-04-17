@@ -1,0 +1,1 @@
+export const BASE_URL = 'http://cde9-117-2-125-10.ngrok.io/api/auth';

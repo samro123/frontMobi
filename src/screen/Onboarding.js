@@ -1,9 +1,7 @@
 import { ImageBackground, StatusBar, StyleSheet, Text, View, Image, TouchableOpacity, FlatList, Animated, SafeAreaView } from 'react-native'
 import React,{useState, useRef} from 'react'
-import * as Font from 'expo-font';
 import {imgages, theme} from '../../src/constants'
 import Buttons from '../components/Buttons';
-import OnboardingItem from '../components/OnboardingItem';
 import slides from '../Slide/slides';
 
 const {COLORS, SIZES, FONTS} = theme;
@@ -18,6 +16,7 @@ const Onboarding = ({navigation}) => {
 
 
   function rederConten(){
+
     return(
     <Animated.ScrollView 
           horizontal
@@ -102,50 +101,23 @@ const Onboarding = ({navigation}) => {
   return (
     <View style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor="#fff"/>
-        {/*Imge 
-        <View style={{ flex:2 ,flexDirection:"column",alignItems:'center', backgroundColor:'#fff' }}>
-          <ImageBackground source={require('../assets/images/welcome.png')} style={{flex:1 ,width:250, height:250 }}/>
-        </View>
-        {/*Imge */} 
-        <View style={styles.view1}>
-           {/*Imge 
-        <FlatList data={slides}
-          renderItem={({item})=> <OnboardingItem item={item}/>} 
-          horizontal
-          showsHorizontalScrollIndicator
-          pagingEnabled
-          bounces={false}
-          keyExtractor={(item)=>item.id}
-          onScroll={Animated.event([{nativeEvent: {contentOffset:{x: scrollX}}}], {useNativeDriver: false,})}
-          />
-          */} 
+        <View style={styles.view1}> 
           <SafeAreaView>
               <View>
               {rederConten()}
               </View>
               <View  style={styles.dotRootcontainer}>
                 {redeerDots()}
-              </View>
-             
-             
-              
+              </View>    
           </SafeAreaView>
         </View>
          
         
         <View style={styles.view2}>
-          {/*Text 
-          <View style={{ flex:1, flexDirection:'column', alignItems:'center',justifyContent:'flex-start', backgroundColor:'#fff' }}>
-            <Text style={styles.text}>Wellcome</Text>
-            <Text style={styles.text1}>font name you registered with is different from the font name you want to use.</Text>
-          </View> 
-          {/*Text */}
-            {/*Button */} 
           <View style={{ flex:2, flexDirection:'column', alignItems:'center'}}>
             <Buttons btn_text={"Login"} on_Press={()=>navigation.navigate("Login")}/>
-            <Buttons btn_text={"Sign in"} on_Press={()=>navigation.navigate("SignIn")}/>
+            <Buttons btn_text={"Sign in"} on_Press={()=>navigation.navigate("Edit")}/>
           </View>
-
         </View>
         {/*Button */}
       

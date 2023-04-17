@@ -1,5 +1,6 @@
 import  imgages from "./images"
+import icons from "./icons"
 import theme ,{COLORS, SIZES, FONTS} from "./theme"
 
-export {imgages, theme, COLORS, SIZES, FONTS};
+export {imgages, icons,theme, COLORS, SIZES, FONTS};
 

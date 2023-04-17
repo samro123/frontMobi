@@ -1,25 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, Text, View } from 'react-native';
-import{Splash, Onboarding,Login, SignIn, Home} from './src/screen'
-import Tabs from './src/components/Tab'
+import { AuthProvider } from './src/context/AuthContext';
+import AppNav from './src/navigation/AppNav';
 
-const Stack = createNativeStackNavigator();
 
 const App = ()=>{
   return(
-    <NavigationContainer>
-      <Stack.Navigator >
-        <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }}/>
-        <Stack.Screen name="Onboarding" component={Onboarding}  options={{ headerShown: false }} />
-        <Stack.Screen name="Login" component={Login}  options={{headerBackTitle:"Back" ,title: 'Login', headerStyle:{} }}  />
-        <Stack.Screen name="SignIn" component={SignIn} options={{headerBackTitle:"Back" ,title: 'Sign In', headerStyle:{} }}/>
-        <Stack.Screen name="Home" component={Tabs} options={{ title:'Home'}}/>
-      </Stack.Navigator>
-    </NavigationContainer>
-
+    <AuthProvider>
+       <AppNav/>
+    </AuthProvider>
+    
+   
+   
   );
 
 }
