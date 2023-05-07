@@ -1,12 +1,11 @@
-import { StyleSheet, Text, View, Image,TouchableOpacity } from 'react-native';
-import {imgages, icons, theme} from '../../src/constants'
-import { Avatar, ListItem } from "react-native-elements"; 
-import React from 'react'
-import { useNavigation } from '@react-navigation/native';
-import {AddAccountScreen} from '../screen'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { imgages, icons, theme } from "../../src/constants";
+import { Avatar, ListItem } from "react-native-elements";
+import React from "react";
+import { useNavigation } from "@react-navigation/native";
+import { AddAccountScreen } from "../screen";
 
-
-const {COLORS, SIZES, FONTS} = theme;
+const { COLORS, SIZES, FONTS } = theme;
 const list = [
   {
     name: "Tiền mặt",
@@ -24,17 +23,15 @@ const list = [
     name: "Thẻ",
     icon: "flight-takeoff",
     amount: "300000",
-    color: "#333fas",
+    color: "#333",
   },
 ];
 const totalAmount = list.reduce((sum, item) => {
   return sum + parseInt(item.amount);
 }, 0);
 
-
 const Wallet = () => {
   const navigation = useNavigation();
-
   return (
     <View style={styles.container}>
       <View style={[styles.box1]}>
@@ -49,50 +46,63 @@ const Wallet = () => {
         </View>
         <View>
           {list.map((l, i) => (
-            <ListItem key={i} bottomDivider>
-            <View style={{  alignItems: 'center',
-                          justifyContent:'center',
-                          width: 50,
-                          height: 50,
-                          backgroundColor: l.color,
-                          borderRadius: 20,
-                          marginBottom: 10,}}>
-              <Image style={styles.icon1} source={icons.game}/>
-            </View> 
-              <ListItem.Content>
-                <ListItem.Title>{l.name}</ListItem.Title>
-                <ListItem.Subtitle style={{ color: "green" }}>
-                  {l.amount} đ
-                </ListItem.Subtitle>
-              </ListItem.Content>
-            </ListItem>
+            <TouchableOpacity
+              key={i}
+              onPress={() => {
+                navigation.navigate("EditAccountScreen", {
+                  name: "EditAccountScreen",
+                });
+              }}>
+              <ListItem bottomDivider>
+                <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: 50,
+                    height: 50,
+                    backgroundColor: l.color,
+                    borderRadius: 20,
+                    marginBottom: 10,
+                  }}>
+                  <Image style={styles.icon1} source={icons.game} />
+                </View>
+                <ListItem.Content>
+                  <ListItem.Title>{l.name}</ListItem.Title>
+                  <ListItem.Subtitle style={{ color: "green" }}>
+                    {l.amount} đ
+                  </ListItem.Subtitle>
+                </ListItem.Content>
+              </ListItem>
+            </TouchableOpacity>
           ))}
         </View>
-        <TouchableOpacity   onPress={() => {
-        navigation.navigate("AddAccountScreen", { name: "AddAccountScreen" });
-      }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("AddAccountScreen", {
+              name: "AddAccountScreen",
+            });
+          }}>
           <View>
             <ListItem>
-            <View style={styles.viewIcon1}>
-                <Image style={styles.icon1} source={icons.more}/>
-              </View> 
+              <View style={styles.viewIcon1}>
+                <Image style={styles.icon1} source={icons.more} />
+              </View>
               <ListItem.Content>
                 <ListItem.Title>Thêm tài khoản</ListItem.Title>
               </ListItem.Content>
             </ListItem>
           </View>
         </TouchableOpacity>
-      
       </View>
 
       <View style={[styles.box3]}>
         <Text>Foteer</Text>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default Wallet
+export default Wallet;
 
 const styles = StyleSheet.create({
   container: {
@@ -103,8 +113,8 @@ const styles = StyleSheet.create({
   box1: {
     flex: 1,
     backgroundColor: "#2196F3",
-    alignItems: 'center',
-    justifyContent:'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   //content
   box2: {
@@ -119,22 +129,22 @@ const styles = StyleSheet.create({
   box3: {
     flex: 1,
     backgroundColor: "#e3aa1a",
-    alignItems: 'center',
-    justifyContent:'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
-  viewIcon1:{
-    alignItems: 'center',
-    justifyContent:'center',
+  viewIcon1: {
+    alignItems: "center",
+    justifyContent: "center",
     width: 50,
     height: 50,
     backgroundColor: COLORS.goldyelow,
     borderRadius: 20,
     marginBottom: 10,
     // marginLeft: 55
-},
-icon1:{
-  width: 20,
-  height: 20,
-  tintColor: COLORS.white
-},
-})
+  },
+  icon1: {
+    width: 20,
+    height: 20,
+    tintColor: COLORS.white,
+  },
+});

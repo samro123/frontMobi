@@ -7,3 +7,4 @@ export {default as Home1} from './Home1';
 export {default as Edit} from './Edit';
 export {default as Wallet} from './Wallet'
 export {default as AddAccountScreen} from './AddAccountScreen'
+export {default as EditAccountScreen} from './EditAccountScreen'
