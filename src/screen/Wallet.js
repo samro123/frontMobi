@@ -1,7 +1,10 @@
-import { StyleSheet, Text, View, Image} from 'react-native';
+import { StyleSheet, Text, View, Image,TouchableOpacity } from 'react-native';
 import {imgages, icons, theme} from '../../src/constants'
 import { Avatar, ListItem } from "react-native-elements"; 
 import React from 'react'
+import { useNavigation } from '@react-navigation/native';
+import {AddAccountScreen} from '../screen'
+
 
 const {COLORS, SIZES, FONTS} = theme;
 const list = [
@@ -30,6 +33,8 @@ const totalAmount = list.reduce((sum, item) => {
 
 
 const Wallet = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={[styles.box1]}>
@@ -63,16 +68,21 @@ const Wallet = () => {
             </ListItem>
           ))}
         </View>
-        <View>
-          <ListItem>
-          <View style={styles.viewIcon1}>
-              <Image style={styles.icon1} source={icons.more}/>
-            </View> 
-            <ListItem.Content>
-              <ListItem.Title>Thêm tài khoản</ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-        </View>
+        <TouchableOpacity   onPress={() => {
+        navigation.navigate("AddAccountScreen", { name: "AddAccountScreen" });
+      }}>
+          <View>
+            <ListItem>
+            <View style={styles.viewIcon1}>
+                <Image style={styles.icon1} source={icons.more}/>
+              </View> 
+              <ListItem.Content>
+                <ListItem.Title>Thêm tài khoản</ListItem.Title>
+              </ListItem.Content>
+            </ListItem>
+          </View>
+        </TouchableOpacity>
+      
       </View>
 
       <View style={[styles.box3]}>
