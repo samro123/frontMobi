@@ -14,7 +14,7 @@ import { Button, ListItem } from "react-native-elements";
 
 const { COLORS, SIZES, FONTS } = theme;
 
-const AddAccountScreen = () => {
+const AddWalletScreen = () => {
   const [value, setValue] = useState(0);
   const items = [
     { label: "Thu", value: 0 },
@@ -104,7 +104,7 @@ const AddAccountScreen = () => {
   );
 };
 
-export default AddAccountScreen;
+export default AddWalletScreen;
 
 const styles = StyleSheet.create({
   container: {

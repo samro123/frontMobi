@@ -3,7 +3,7 @@ import { imgages, icons, theme } from "../../src/constants";
 import { Avatar, ListItem } from "react-native-elements";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { AddAccountScreen } from "../screen";
+import { AddWalletScreen } from "../screen";
 
 const { COLORS, SIZES, FONTS } = theme;
 const list = [
@@ -49,8 +49,8 @@ const Wallet = () => {
             <TouchableOpacity
               key={i}
               onPress={() => {
-                navigation.navigate("EditAccountScreen", {
-                  name: "EditAccountScreen",
+                navigation.navigate("EditWalletScreen", {
+                  name: "EditWalletScreen",
                 });
               }}>
               <ListItem bottomDivider>
@@ -78,8 +78,8 @@ const Wallet = () => {
         </View>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("AddAccountScreen", {
-              name: "AddAccountScreen",
+            navigation.navigate("AddWalletScreen", {
+              name: "AddWalletScreen",
             });
           }}>
           <View>

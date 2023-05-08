@@ -14,7 +14,7 @@ import {
   
   const { COLORS, SIZES, FONTS } = theme;
   
-  const AddAccountScreen = () => {
+  const AddWalletScreen = () => {
     const [value, setValue] = useState(0);
     const items = [
       { label: "Thu", value: 0 },
@@ -89,7 +89,7 @@ import {
     );
   };
   
-  export default AddAccountScreen;
+  export default AddWalletScreen;
   
   const styles = StyleSheet.create({
     container: {
