@@ -5,7 +5,8 @@ export const shoppe = require("../assets/icons/shopping-bag.png");
 export const food = require("../assets/icons/dish.png");
 export const health = require("../assets/icons/healthcare.png");
 export const more = require("../assets/icons/more.png");
-export const wallet = require("../assets/images/wallet.png")
+export const wallet = require("../assets/images/wallet.png");
+export const cancel = "https://i.ibb.co/b2Yqvj7/delivery-truck.png";
 
 export default{
     phone,
@@ -15,6 +16,7 @@ export default{
     food,
     health,
     more,
-    wallet
+    wallet,
+    cancel
 
 }

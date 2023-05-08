@@ -1,8 +1,9 @@
-import { ScrollView, StyleSheet, Text, View, FlatList, TouchableOpacity, Image, SafeAreaView } from 'react-native'
+import { ScrollView, StyleSheet, Text, View, FlatList, TouchableOpacity, Image, SafeAreaView,StatusBar, ImageBackground ,Animated} from 'react-native'
 import React,{useState} from 'react'
 import {imgages, icons, theme} from '../../src/constants'
 import {VictoryPie} from 'victory-native'
 import { LinearGradient } from 'expo-linear-gradient';
+import { BottomPopup } from '../components/BottomPopup';
 
 const {COLORS, SIZES, FONTS} = theme;
 
@@ -265,15 +266,27 @@ const Home1 = ({navigation}) => {
         )
     }
     function renderHeader(){
-        return(
-            <View style={styles.headerView}>
-               <View style={{ flex: 1 }}>
-                <Text>Hello</Text>
-                <Text>ByProgram</Text>
-
-               </View>
-            </View>
-        )
+       return(
+        <View style={{ ...styles.headerView }}>
+            <ImageBackground 
+              source={imgages.banner}
+              resizeMode="cover"
+              style={{ 
+                  flex: 1,
+                  alignItems:'center',
+                  borderBottomLeftRadius: 60, 
+                  overflow: 'hidden'
+               }}
+             >
+              
+               
+            </ImageBackground>
+            
+           
+            
+          
+        </View>
+       )
     }
 
     function renderFeatures(){
@@ -318,7 +331,7 @@ const Home1 = ({navigation}) => {
                 ListHeaderComponent={headerFeature}
                 data={featuresDatas}
                 numColumns={4}
-                columnWrapperStyle={{ justifyContent: 'space-between' }}
+                columnWrapperStyle={{ justifyContent: 'flex-start' }}
                 keyExtractor={item =>`${item.id}`}
                 renderItem={renderItem}
                 style={{ marginTop: SIZES.padding }}
@@ -330,19 +343,25 @@ const Home1 = ({navigation}) => {
 
         const HeaderComponent=() => (
             <View>
-            {renderHeader()}
+           
             {renderChart()}
             {renderFeatures()}
             </View>
         )
-           
-        
-
+        // Bottom modal
+        let popupRef = React.createRef()
+        const onShowPopup= ()=>{
+            popupRef.show()
+        }
+        const onClosePopup = ()=>{
+            popupRef.close()
+        }
+        //end Bottom modal
         const renderItems = ({item})=>(
            
             <TouchableOpacity
                 style={styles.touchFlat}
-                 onPress={()=> console.log(item.title)}
+                 onPress={onShowPopup}
                 >
                     <View
                         style={styles.touchView1}>
@@ -361,8 +380,17 @@ const Home1 = ({navigation}) => {
                         <Text>{item.description}</Text>
                         
                     </View>
-
+                    <BottomPopup 
+                        ref={(target) => popupRef=target}
+                        onTouchOutside={onClosePopup}
+                        title={item.title}
+                        image={item.img}
+                        da="danh muc"
+                        
+                    />
             </TouchableOpacity>
+            
+            
         )
             
             
@@ -384,19 +412,22 @@ const Home1 = ({navigation}) => {
 
     }
   return (
+    <ScrollView>
+    <View style={{ flex: 1 }}>
+    <StatusBar barStyle="light-content" hidden={true}/> 
+          
     <LinearGradient colors={[COLORS.pink , COLORS.blue]} style={{ flex:1 }}>
-        <SafeAreaView style={styles.container}>
-            {/*
-         <View style={styles.view1}>
-            {renderChart()}
-         </View>
-          */}
+        <View style={styles.container}>
+            {renderHeader()}
+            
          <View style={styles.view2}>
              {renderPromos()}   
          </View>
-      </SafeAreaView>
+      </View>
     
     </LinearGradient>
+    </View>
+    </ScrollView>
   )
 }
 
@@ -410,18 +441,35 @@ const styles = StyleSheet.create({
     },
    
     view1:{
-        flex: 2,
+        flex: 1,
         flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
+        
+
     },
     view2:{
-        flex: 1,
+        flex: 2,
         alignItems: 'center',
         justifyContent: 'center'
     },
     viewChart:{
         alignItems:'center',
         justifyContent:'center'
+    },
+    header:{
+        
+        width: '100%',
+        backgroundColor: COLORS.blue,
+    }, 
+    headerPlaceHolde: {
+        height: 40,
+    },
+    uperHeader:{
+        height: 40,
+    },
+    lowHeader:{
+        height: 96
     },
     textChart:{
         position: "absolute",
@@ -454,9 +502,10 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 20
     },
     headerView:{
-        flexDirection:'row', 
-        marginVertical: SIZES.padding
-
+        width: '100%',
+        height: 200,
+       
+        
     },
     touchFeature:{
         marginBottom: SIZES.padding,
@@ -473,6 +522,31 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         flexWrap:'wrap'
     },
+    shawdow:{
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0 ,
+            height: 10,
+        },
+        shawdowOpacity: 0.25,
+        shawdowRadius: 3.5,
+        elevation: 5
+    },
+    headerViewImge:{
+        marginTop: SIZES.padding ,
+        width: '100%',
+        alignItems: 'baseline',
+        flexDirection:'row',
+        justifyContent:'space-between',
+        paddingHorizontal: SIZES.padding
+    },
+    headerIcon:{
+        width: 35,
+        height: 35,
+        alignItems:'center',
+        justifyContent:'center'
+    }
+   
    
 
 })

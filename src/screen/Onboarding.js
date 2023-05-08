@@ -116,7 +116,7 @@ const Onboarding = ({navigation}) => {
         <View style={styles.view2}>
           <View style={{ flex:2, flexDirection:'column', alignItems:'center'}}>
             <Buttons btn_text={"Login"} on_Press={()=>navigation.navigate("Login")}/>
-            <Buttons btn_text={"Sign in"} on_Press={()=>navigation.navigate("Edit")}/>
+            <Buttons btn_text={"Sign in"} on_Press={()=>navigation.navigate("Home1")}/>
           </View>
         </View>
         {/*Button */}

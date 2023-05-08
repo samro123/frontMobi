@@ -1,96 +1,106 @@
 import React from "react";
-import { Image } from "react-native";
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
-import{Splash, Onboarding,Login, SignIn, Home} from '../screen'
+import { Image, StyleSheet, View,Text, TouchableOpacity } from "react-native";
+import {createBottomTabNavigator, BottomTabBar} from "@react-navigation/bottom-tabs"
+import{Splash, Onboarding,Login, SignIn, Home, Home1, Edit} from '../screen'
+import Svg,{Path} from 'react-native-svg'
+import {imgages, icons, theme} from '../constants'
 
-import { COLORS, imgages } from "../constants";
-
+const {COLORS, SIZES, FONTS} = theme;
 const Tab =  createBottomTabNavigator();
-const tabOptions = {
-    showLabel : false,
-    style: {
-        height: 90,
+const CustomTabBarButton = ({children, onPress}) =>(
+    <TouchableOpacity onPress={onPress} 
+        style={[styles.touchOp, styles.shawdow]}
+    >
+        <View style={styles.viewTouch}>{children}</View>
+    </TouchableOpacity>
+);
+
+const Tabs = () =>{
+    return (
+        <Tab.Navigator 
+        
+            screenOptions={{ 
+                tabBarShowLabel: false,
+                tabBarStyle:{
+                    position: 'absolute',
+                    borderRadius: 15,
+                    bottom: 5,
+                    left: 10,
+                    right: 10,
+                    elevation: 0,
+                    backgroundColor: '#ffffff',
+                    height: 90,
+                    ...styles.shawdow
+                    
+                }
+             }}
+        >
+                <Tab.Screen name="Home1" component={Home1}  options={{ 
+                    tabBarIcon: ({focused}) =>(
+                        <View style={styles.viewHome}>
+                            <Image 
+                            source={icons.game}
+                            resizeMode="contain"
+                            style={{ tintColor: focused ? COLORS.organ : COLORS.gray
+                                ,...styles.img  }}
+                            
+                            />
+                            <Text style={{ color: focused ? COLORS.organ : COLORS.gray , fontSize: 12 }}>Home</Text>
+                        </View>
+                    ),
+                    headerShown: false
+                  
+                 }}/>
+                <Tab.Screen name="Edit" component={Edit}  options={{ 
+                    tabBarIcon: ({focused}) =>(
+                        <View style={styles.viewHome}>
+                            <Image 
+                            source={icons.phone}
+                            resizeMode="contain"
+                            style={{ tintColor: focused ? COLORS.organ : COLORS.gray
+                                ,...styles.img  }}
+                            
+                            />
+                            <Text style={{ color: focused ? COLORS.organ : COLORS.gray , fontSize: 12 }}>Edit</Text>
+                        </View>
+                    ),
+                 }}/>
+
+        </Tab.Navigator>
+        
+    )
+
+}
+export default Tabs; 
+const styles = StyleSheet.create({
+    img:{
+        width: 25,
+        height: 25
+    },
+    viewHome:{
+        alignItems: 'center',
+        justifyContent: 'center',
+       
+    },
+    shawdow:{
         shadowColor: "#000",
         shadowOffset: {
             width: 0 ,
             height: 10,
         },
-        shawdowOpacity: 0.53,
-        shawdowRadius: 13.79,
-        elevation: 21,
-
+        shawdowOpacity: 0.25,
+        shawdowRadius: 3.5,
+        elevation: 5
+    },
+    touchOp:{
+        top: -30,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    viewTouch:{
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        backgroundColor: COLORS.organ
     }
-} 
-
-const Tabs = () =>{
-    return (
-        <Tab.Navigator 
-            tabBarOptions={tabOptions}
-            screenOptions={({route})=>({
-                tabBarIcon: ({focused})=>{
-                    const tintColor = focused ? COLORS.blue : COLORS.gray;
-                    switch(route.name){
-                        case "Home": 
-                            return(
-                                <Image
-                                source={imgages.category}
-                                resizeMode="contain"
-                                style={{ 
-                                    tintColor: tintColor,
-                                    width:30,
-                                    height: 30,
-
-                                 }}
-                                />
-                            )
-                            case "Overview": 
-                            return(
-                                <Image
-                                source={imgages.category}
-                                resizeMode="contain"
-                                style={{ 
-                                    tintColor: tintColor,
-                                    width:30,
-                                    height: 30,
-                                    
-                                 }}
-                                />
-                            )
-                            case "Finance": 
-                            return(
-                                <Image
-                                source={imgages.category}
-                                resizeMode="contain"
-                                style={{ 
-                                    tintColor: tintColor,
-                                    width:30,
-                                    height: 30,
-                                    
-                                 }}
-                                />
-                            )
-                            case "Innformation": 
-                            return(
-                                <Image
-                                source={imgages.category}
-                                resizeMode="contain"
-                                style={{ 
-                                    tintColor: tintColor,
-                                    width:30,
-                                    height: 30,
-                                    
-                                 }}
-                                />
-                            )
-                    }
-                }
-            })}
-        >
-            <Tab.Screen name="Home" component={Home} />
-           
-
-        </Tab.Navigator>
-    )
-
-}
-export default Tabs; 
+})

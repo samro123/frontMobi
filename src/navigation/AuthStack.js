@@ -12,14 +12,14 @@ const AuthStack = () => {
   return (
   <Stack.Navigator >
     {userInfo.token ?  (
-    <Stack.Screen name="Home" component={Home} options={{ title:'Home'}}/>
+    <Stack.Screen name="Home" component={Home} />
     ) : (
       <>
     <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }}/>
     <Stack.Screen name="Onboarding" component={Onboarding}  options={{ headerShown: false }} />
     <Stack.Screen name="Login" component={Login}  options={{headerBackTitle:"Back" ,title: 'Login', headerStyle:{} }}  />
     <Stack.Screen name="SignIn" component={SignIn} options={{headerBackTitle:"Back" ,title: 'Sign In', headerStyle:{} }}/>
-    <Stack.Screen name="Home1" component={Home1} />
+    <Stack.Screen name="Home1" component={Tabs} options={{ headerShown: false }} />
     <Stack.Screen name="Edit" component={Edit}/>
     
       </>

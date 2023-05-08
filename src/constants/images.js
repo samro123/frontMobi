@@ -5,7 +5,7 @@ export const  category = require('../assets/images/category.png');
 export const information = require('../assets/images/information.png');
 export const overview = require('../assets/images/overview.png');
 export const finance = require('../assets/images/finance.png');
-
+export const banner = require('../assets/images/banner.png');
 
 
 
@@ -16,5 +16,6 @@ export default{
     category,
     information,
     overview,
-    finance
+    finance,
+    banner,
 }
