@@ -10,9 +10,6 @@ const App = ()=>{
     <AuthProvider>
        <AppNav/>
     </AuthProvider>
-    
-   
-   
   );
 
 }

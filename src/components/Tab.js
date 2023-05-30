@@ -1,9 +1,10 @@
 import React from "react";
 import { Image, StyleSheet, View,Text, TouchableOpacity } from "react-native";
 import {createBottomTabNavigator, BottomTabBar} from "@react-navigation/bottom-tabs"
-import{Splash, Onboarding,Login, SignIn, Home, Home1, Edit} from '../screen'
+import{ Home1, Edit,Wallet, Profile, Transaction} from '../screen'
 import Svg,{Path} from 'react-native-svg'
 import {imgages, icons, theme} from '../constants'
+
 
 const {COLORS, SIZES, FONTS} = theme;
 const Tab =  createBottomTabNavigator();
@@ -22,7 +23,7 @@ const Tabs = () =>{
             screenOptions={{ 
                 tabBarShowLabel: false,
                 tabBarStyle:{
-                    position: 'absolute',
+                   position: 'absolute',
                     borderRadius: 15,
                     bottom: 5,
                     left: 10,
@@ -39,31 +40,62 @@ const Tabs = () =>{
                     tabBarIcon: ({focused}) =>(
                         <View style={styles.viewHome}>
                             <Image 
-                            source={icons.game}
+                            source={icons.income}
                             resizeMode="contain"
                             style={{ tintColor: focused ? COLORS.organ : COLORS.gray
                                 ,...styles.img  }}
                             
                             />
-                            <Text style={{ color: focused ? COLORS.organ : COLORS.gray , fontSize: 12 }}>Home</Text>
+                            <Text style={{ color: focused ? COLORS.organ : COLORS.gray , fontSize: 12 }}>Income</Text>
                         </View>
                     ),
                     headerShown: false
                   
                  }}/>
-                <Tab.Screen name="Edit" component={Edit}  options={{ 
+                <Tab.Screen name="Home2" component={Home1}  options={{ 
                     tabBarIcon: ({focused}) =>(
                         <View style={styles.viewHome}>
                             <Image 
-                            source={icons.phone}
+                            source={icons.outcome}
                             resizeMode="contain"
                             style={{ tintColor: focused ? COLORS.organ : COLORS.gray
                                 ,...styles.img  }}
                             
                             />
-                            <Text style={{ color: focused ? COLORS.organ : COLORS.gray , fontSize: 12 }}>Edit</Text>
+                            <Text style={{ color: focused ? COLORS.organ : COLORS.gray , fontSize: 12 }}>Spend</Text>
                         </View>
                     ),
+                    headerShown: false
+                 }}/>
+                  <Tab.Screen name="WALLET" component={Wallet}  options={{ 
+                    tabBarIcon: ({focused}) =>(
+                        <View style={styles.viewHome}>
+                            <Image 
+                            source={icons.wallet}
+                            resizeMode="contain"
+                            style={{ tintColor: focused ? COLORS.organ : COLORS.gray
+                                ,...styles.img  }}
+                            
+                            />
+                            <Text style={{ color: focused ? COLORS.organ : COLORS.gray , fontSize: 12 }}>Wallet</Text>
+                        </View>
+                    ),
+                    headerShown: false
+                 }}/>
+                   <Tab.Screen name="Profile" component={Transaction}  options={{ 
+                    tabBarIcon: ({focused}) =>(
+                        <View style={styles.viewHome}>
+                            <Image 
+                            source={icons.uers}
+                            resizeMode="contain"
+                            style={{ tintColor: focused ? COLORS.organ : COLORS.gray
+                                ,...styles.img  }}
+                            
+                            />
+                            <Text style={{ color: focused ? COLORS.organ : COLORS.gray , fontSize: 12 }}>Profile</Text>
+                        </View>
+                    ),
+                    headerShown: false
                  }}/>
 
         </Tab.Navigator>

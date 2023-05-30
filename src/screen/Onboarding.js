@@ -3,6 +3,8 @@ import React,{useState, useRef} from 'react'
 import {imgages, theme} from '../../src/constants'
 import Buttons from '../components/Buttons';
 import slides from '../Slide/slides';
+import {TextButton} from "../components"
+
 
 const {COLORS, SIZES, FONTS} = theme;
 const Onboarding = ({navigation}) => {
@@ -47,8 +49,8 @@ const Onboarding = ({navigation}) => {
                 <View style={{ flex: 1,position: 'relative'}}>
                   <Text style={{ 
                       ...FONTS.h1,
+                      flexWrap: 'wrap',
                       textAlign:'center',
-                      
                    }}>{item.title}</Text>
                   <Text style={{ 
                     textAlign: 'center',
@@ -115,8 +117,24 @@ const Onboarding = ({navigation}) => {
         
         <View style={styles.view2}>
           <View style={{ flex:2, flexDirection:'column', alignItems:'center'}}>
-            <Buttons btn_text={"Login"} on_Press={()=>navigation.navigate("Login")}/>
-            <Buttons btn_text={"Sign in"} on_Press={()=>navigation.navigate("Home1")}/>
+             {/*Button 
+            <Buttons btn_text={"Sign in"} on_Press={()=>navigation.navigate("Home1")}/> */}
+             <TextButton 
+                    lable="Login"
+                    contentContainerStyle={
+                      styles.btnLogin
+                    }
+                    labelStyle={{ color:COLORS.white , ...FONTS.h2}}
+                    onPress={()=>navigation.navigate("Login")}
+              />
+            <TextButton 
+                    lable="Insign"
+                    contentContainerStyle={
+                      styles.btnLogin
+                    }
+                    labelStyle={{ color:COLORS.white , ...FONTS.h2}}
+                    onPress={()=>navigation.navigate("Tabs")}
+              />
           </View>
         </View>
         {/*Button */}
@@ -174,6 +192,14 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius,
     backgroundColor: COLORS.blue,
     marginHorizontal: SIZES.radius /2
+  },
+  btnLogin:{
+    height: 50,
+    width:"70%",
+    paddingHorizontal: SIZES.radius,
+    borderRadius: 20,
+    backgroundColor: "#7F3DFF",
+    marginTop: 10
   },
   
 })

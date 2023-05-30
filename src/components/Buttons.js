@@ -1,5 +1,8 @@
 import { StyleSheet, Text, View, TouchableOpacity, } from 'react-native'
 import React from 'react'
+import {imgages, theme} from '../../src/constants'
+
+const {COLORS, SIZES, FONTS} = theme;
 
 const Buttons = ({on_Press, btn_text}) => {
   return (
@@ -23,7 +26,8 @@ const styles = StyleSheet.create({
      borderRadius: 10
   },
   text:{
-    fontSize: 15, letterSpacing: 1.5,textAlign:'center', position:'relative', color:'white'
+     letterSpacing: 1.5,textAlign:'center', position:'relative', color:'white',
+    ...FONTS.h3
 
   }
 })

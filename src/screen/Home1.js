@@ -1,9 +1,14 @@
 import { ScrollView, StyleSheet, Text, View, FlatList, TouchableOpacity, Image, SafeAreaView,StatusBar, ImageBackground ,Animated} from 'react-native'
-import React,{useState} from 'react'
+import React,{useState, useContext, useEffect} from 'react'
 import {imgages, icons, theme} from '../../src/constants'
 import {VictoryPie} from 'victory-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { BottomPopup } from '../components/BottomPopup';
+import { AppHeader} from "../components"
+import { AuthContext } from '../context/AuthContext';
+import axios from 'axios';
+import {BASE_URL} from '../config'
+
 
 const {COLORS, SIZES, FONTS} = theme;
 
@@ -156,7 +161,7 @@ let featuresData = [
         icon: icons.shoppe,
         color:COLORS.blue,
         backgroundColor: COLORS.lightblue,
-        description: "Shopping",
+        description: "Shoppinggggg",
         total: 25.00
     },
     {
@@ -199,6 +204,33 @@ const Home1 = ({navigation}) => {
     const [featuresDatas, setFeaturesData] = useState(featuresData)
     const [specialPromoDatas, setSpecialPromoData] = useState(specialPromoData)
     const [selectedCategory, setSelectedCategory] = useState(null)
+
+    const [posts, setPosts] = useState({});
+    const {userInfo} = useContext(AuthContext);
+
+  //get api 
+  const getPosts = () => {
+    axios
+      .get(`${BASE_URL}/home/out-come`, {
+        headers: {Authorization: `Bearer ${userInfo.token}`},
+      })
+      .then(res => {
+        console.log(res.data);
+        setPosts(res.data);
+      })
+      .catch(e => {
+        console.log(`Error on getting posts ${e.message}`);
+      });
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  //end api get
+
+
+
     function processCategoryDataToDisplay(){
         //Filter expenses with "Confirmed" status
         let chartData = categories.map((item) => {
@@ -267,61 +299,59 @@ const Home1 = ({navigation}) => {
     }
     function renderHeader(){
        return(
-        <View style={{ ...styles.headerView }}>
-            <ImageBackground 
-              source={imgages.banner}
-              resizeMode="cover"
-              style={{ 
-                  flex: 1,
-                  alignItems:'center',
-                  borderBottomLeftRadius: 60, 
-                  overflow: 'hidden'
-               }}
-             >
-              
-               
-            </ImageBackground>
-            
-           
-            
-          
+        <View style={{ flex:1 }}>
+             <AppHeader
+             title={"Home"}
+             headerBg={"#60c5a8"}
+             iconColor={"black"}
+             menu //or back
+             
+             optionalBadge={5}
+             right="more-vertical"
+             rightFunction={() => console.log('right')}
+             optionalIcon="bell"
+             optionalFunc={() => console.log('optional')}
+            />
         </View>
        )
     }
 
     function renderFeatures(){
         const headerFeature = ()=>(
-            <View style={{ marginBottom: SIZES.padding }}>
-                <Text>Features</Text>
+            <View style={styles.viewFeature}>
+                <View style={{ flex:1 }}><Text>Features</Text></View>
+                <View style={styles.viewFeatureHeader}>
+                    <TouchableOpacity style={styles.touchTouch1} onPress={()=>navigation.navigate("Adjust")}>
+                        <Image source={icons.adjust} style={{ width:20, height:20, }}/>
+                    </TouchableOpacity>
+                </View>
+                
             </View>
         )
         
         const renderItem = ({item}) =>(
             <TouchableOpacity style={styles.touchFeature} 
-                onPress={()=> navigation.navigate("Edit")}
+                onPress={()=> navigation.navigate("Edit", {post: 1, post1: 2})}
             >    
-                <Text>{item.description}</Text>
+                <View style={{ justifyContent: 'center' }}><Text numberOfLines={1} ellipsizeMode="tail" style={{ width: 70,justifyContent: 'center',alignItems: 'center' }}>{item.category}</Text></View>
+                
                 <View style={{ 
-                    height: 50,
-                    width: 50,
-                    marginBottom: 5,
-                    marginTop: 5,
-                    borderRadius: 20,
-                    backgroundColor: item.backgroundColor,
-                    alignItems: 'center',
-                    justifyContent: 'center'
+                    
+                    backgroundColor: item.color,
+                    ...styles.viewItemFeature
                  }}>
                     <Image 
-                        source={item.icon}
+                        //source={item.icon}
+                        source={{ uri:item.icon }}
                         resizeMode="contain"
                         style={{ 
                             height: 20,
                             width: 20,
-                            tintColor: item.color
+                            tintColor: COLORS.white
                          }}
                     />
                 </View>
-                <Text>{item.total}</Text>
+                <Text style={{ ...FONTS.h4 }}>{item.price}</Text>
 
             </TouchableOpacity>
         )
@@ -329,7 +359,7 @@ const Home1 = ({navigation}) => {
         return(
             <FlatList
                 ListHeaderComponent={headerFeature}
-                data={featuresDatas}
+                data={posts.categoryCustomDTO}
                 numColumns={4}
                 columnWrapperStyle={{ justifyContent: 'flex-start' }}
                 keyExtractor={item =>`${item.id}`}
@@ -338,30 +368,37 @@ const Home1 = ({navigation}) => {
             />
         )
     }
+    function renderHeaderChart(){
+        return(
+            <View style={{ flexDirection:'row',marginVertical: SIZES.padding }}>
+                <View style={{ flex:1 }}>
+                    <Text>HELLO !</Text>
+                    <Text>Sam</Text>
 
+                </View>
+                <View style={{ alignItems: 'center',  justifyContent: 'center' }}>
+                    <TouchableOpacity style={{ alignItems: 'center',  justifyContent: 'center', height: 40, width:40,backgroundColor:COLORS.white, borderRadius: 20 }}>
+                        <Image source={icons.uers} style={{ width:20, height:20, }}/>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        )
+    }
     function renderPromos(){
 
         const HeaderComponent=() => (
             <View>
-           
+            {renderHeaderChart()}
             {renderChart()}
             {renderFeatures()}
             </View>
         )
-        // Bottom modal
-        let popupRef = React.createRef()
-        const onShowPopup= ()=>{
-            popupRef.show()
-        }
-        const onClosePopup = ()=>{
-            popupRef.close()
-        }
-        //end Bottom modal
+        
         const renderItems = ({item})=>(
            
             <TouchableOpacity
                 style={styles.touchFlat}
-                 onPress={onShowPopup}
+                 
                 >
                     <View
                         style={styles.touchView1}>
@@ -380,14 +417,7 @@ const Home1 = ({navigation}) => {
                         <Text>{item.description}</Text>
                         
                     </View>
-                    <BottomPopup 
-                        ref={(target) => popupRef=target}
-                        onTouchOutside={onClosePopup}
-                        title={item.title}
-                        image={item.img}
-                        da="danh muc"
-                        
-                    />
+                  
             </TouchableOpacity>
             
             
@@ -412,13 +442,20 @@ const Home1 = ({navigation}) => {
 
     }
   return (
-    <ScrollView>
-    <View style={{ flex: 1 }}>
+    <View style={{ flex:1 }}>
     <StatusBar barStyle="light-content" hidden={true}/> 
-          
+    <View style={{flex:0.1, justifyContent:'center' }}>{renderHeader()}</View>
+    <View style={styles.view2}>
+    
+    {renderPromos()}  
+    </View>
+    
+    
+    
+    {/*
     <LinearGradient colors={[COLORS.pink , COLORS.blue]} style={{ flex:1 }}>
         <View style={styles.container}>
-            {renderHeader()}
+            
             
          <View style={styles.view2}>
              {renderPromos()}   
@@ -426,8 +463,9 @@ const Home1 = ({navigation}) => {
       </View>
     
     </LinearGradient>
+    */}
     </View>
-    </ScrollView>
+    
   )
 }
 
@@ -437,7 +475,7 @@ const styles = StyleSheet.create({
     container:{
         flex: 1 ,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'flex-start'
     },
    
     view1:{
@@ -449,7 +487,7 @@ const styles = StyleSheet.create({
 
     },
     view2:{
-        flex: 2,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -545,7 +583,35 @@ const styles = StyleSheet.create({
         height: 35,
         alignItems:'center',
         justifyContent:'center'
+    },
+    touchTouch1:{
+        alignItems: 'center',  
+        justifyContent: 'center', 
+        height: 40, width:40,
+        backgroundColor:COLORS.white, 
+        borderRadius: 20
+    },
+    viewFeature:{
+        marginBottom: SIZES.padding,
+        justifyContent:'space-between', 
+        flexDirection: 'row'
+    },
+    viewFeatureHeader:{
+        alignItems: 'center', 
+        justifyContent: 'center'
+    },
+    viewItemFeature:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 50,
+        width: 50,
+        marginBottom: 5,
+        marginTop: 5,
+        borderRadius: 20,
+
     }
+
+
    
    
 

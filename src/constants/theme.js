@@ -1,7 +1,18 @@
 import { Dimensions } from "react-native";
+import * as Font from 'expo-font';
 const {width, height} = Dimensions.get("window");
 
 
+
+async function loadFonts() {
+    await Font.loadAsync({
+      'font': require('../assets/fonts/font.ttf'),
+      'font1': require('../assets/fonts/Merriweather-BoldItalic.ttf'),
+      'font2': require('../assets/fonts/Merriweather-Light.ttf')
+    });
+  }
+  
+  loadFonts();
 
 export const COLORS = {
     black : "#1E1E1E",
@@ -33,6 +44,7 @@ export const SIZES = {
    h2: 22,
    h3: 16,
    h4: 14,
+   h5: 10,
    body1: 30,
    body2: 22,
    body3: 16,
@@ -43,7 +55,12 @@ export const SIZES = {
 };
 
 export const FONTS={
-    h1:{  fontFamily: "font", fontSize: SIZES.h1, lineHeight: 36}
+    h1:{  fontFamily: 'font1', fontSize: SIZES.h1, lineHeight: 36},
+    h2: { fontFamily: "font2", fontSize: SIZES.h2, lineHeight: 30 },
+    h3: { fontFamily: "font2", fontSize: SIZES.h3, lineHeight: 22 },
+    h4: { fontFamily: "font2", fontSize: SIZES.h4, lineHeight: 22 },
+    h5: { fontFamily: "font2", fontSize: SIZES.h5, lineHeight: 22 },
+    
 
 };
 

@@ -5,10 +5,16 @@ import Buttons from '../components/Buttons'
 import { AuthContext } from '../context/AuthContext'
 import Spinner from 'react-native-loading-spinner-overlay'
 import {imgages, theme} from '../../src/constants'
+import { AppHeader } from '../components'
+
 
 const {COLORS, SIZES, FONTS} = theme;
 
 const Login = ({navigation}) => {
+
+ 
+
+
     const [userName, setName] = useState(null);
     const [passWord, setPassWord] = useState(null);
     const {isLoading, login} = useContext(AuthContext);
@@ -18,11 +24,14 @@ const Login = ({navigation}) => {
       
       <StatusBar barStyle="dark-content" backgroundColor="#fff"/>
         <Spinner visible={isLoading}/>
+        
+
         {/*login form section */}
           <View style={styles.viewForm1}>
+         
               <View style={styles.viewForm2}>
                 <Text style={styles.textForm2}>Wellcome Back</Text>
-                <Image source={require('../assets/images/waving-hand.png')} style={styles.imgForm2}/>
+                <Image source={imgages.hander} style={styles.imgForm2}/>
               </View>
                 {/*login form email */}
               <View style={styles.viewEmail}>
@@ -111,8 +120,10 @@ const styles = StyleSheet.create({
 
   },
   textForm2:{
-    fontSize: 20,
+    fontSize: 30,
      color:'black',
+     ...FONTS.h2,
+     marginRight: 10
   },
   imgForm2: {
     height: 30,

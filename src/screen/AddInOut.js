@@ -8,7 +8,8 @@ import {
     SafeAreaView,
     FlatList,
     Modal,
-    Animated
+    Animated,
+    ScrollView
   } from "react-native";
   import React, { useState, useContext, useEffect,useRef } from "react";
   import { imgages, icons, theme } from "../constants";
@@ -20,12 +21,13 @@ import {
   import Spinner from 'react-native-loading-spinner-overlay';
 
 
+
   const { COLORS, SIZES, FONTS } = theme;
   
   let featuresData = [
     {
         id: 1,
-        icon: icons.wallet,
+        icon: "https://i.ibb.co/HqJyqy2/console.png",
         color: COLORS.red,
         backgroundColor: COLORS.lightred,
         description: "Game",
@@ -33,7 +35,7 @@ import {
     },
     {
         id: 2,
-        icon: icons.delivery,
+        icon: "https://i.ibb.co/k9SS9mV/delivery-truck.png",
         color: COLORS.green,
         backgroundColor: COLORS.lightgreen,
         description: "Delivery",
@@ -41,7 +43,7 @@ import {
     },
     {
         id: 3,
-        icon: icons.food,
+        icon: "https://i.ibb.co/2FxfdyS/dish.png",
         color: COLORS.pink,
         backgroundColor: COLORS.lightpink,
         description: "Food",
@@ -49,7 +51,7 @@ import {
     },
     {
         id: 4,
-        icon: icons.health,
+        icon: "https://i.ibb.co/6DNM3hP/healthcare.png",
         color: COLORS.blue,
         backgroundColor: COLORS.lightblue,
         description: "Health",
@@ -57,7 +59,7 @@ import {
     },
     {
         id: 5,
-        icon: icons.phone,
+        icon: "https://i.ibb.co/VQmjsHk/phone-call.png",
         color:COLORS.pink,
         backgroundColor: COLORS.lightpink,
         description: "Phone",
@@ -65,13 +67,62 @@ import {
     },
     {
         id: 6,
-        icon: icons.shoppe,
+        icon: "https://i.ibb.co/R7NmPW4/shopping-bag.png",
         color:COLORS.blue,
         backgroundColor: COLORS.lightblue,
         description: "Shopping",
         total: 25.00
-    }
-]
+    },
+    {
+      id: 7,
+      icon: "https://i.ibb.co/VNYPN5n/income.png",
+      color:COLORS.blue,
+      backgroundColor: "#FEFF86",
+      description: "Shopping",
+      total: 25.00
+  },
+  {
+    id: 8,
+    icon: "https://i.ibb.co/9VRD1Pg/cash.png",
+    color:COLORS.blue,
+    backgroundColor: COLORS.lightblue,
+    description: "Shopping",
+    total: 25.00
+},
+{
+  id: 9,
+  icon: "https://i.ibb.co/BqR903d/stock-market.png",
+  color:COLORS.blue,
+  backgroundColor: COLORS.lightblue,
+  description: "Shopping",
+  total: 25.00
+},
+{
+  id: 10,
+  icon: "https://i.ibb.co/cNB9bbK/coins.png",
+  color:COLORS.blue,
+  backgroundColor: COLORS.lightblue,
+  description: "Shopping",
+  total: 25.00
+},
+{
+  id: 11,
+  icon: "hhttps://i.ibb.co/gFZ7tDS/real-estate.png",
+  color:COLORS.blue,
+  backgroundColor: COLORS.lightblue,
+  description: "Shopping",
+  total: 25.00
+},
+
+{
+  id: 12,
+  icon: "https://i.ibb.co/m8drDfh/paw.png",
+  color:COLORS.blue,
+  backgroundColor: COLORS.lightblue,
+  description: "Shopping",
+  total: 25.00
+},
+  ]
 
 const ModalPoup =({visible, children}) => {
     const [showModal, setShowModal] = useState(visible);
@@ -109,13 +160,14 @@ const ModalPoup =({visible, children}) => {
 
 
 
-  const AddWalletScreen = ({navigation}) => {
+  const AddInOut = ({navigation, route}) => {
     const [visible, setVisible] = useState(false)
     const [visible1, setVisible1] = useState(false)
     const [value, setValue] = useState(0);
     const [featuresDatas, setFeaturesData] = useState(featuresData)
+    const post = route.params.post;
 
-    const [chooseData, setChooseData] = useState(icons.delivery)  // thay doi icon 
+    const [chooseData, setChooseData] = useState("https://i.ibb.co/k9SS9mV/delivery-truck.png")  // thay doi icon 
     const [chooseDataColor, setChooseDataColor] = useState(COLORS.organ)// thay doi mau
 
     //api wallet const
@@ -129,30 +181,8 @@ const ModalPoup =({visible, children}) => {
     const [loading, setLoading] = useState(false);
     const {userInfo} = useContext(AuthContext);
      
-    const items = [
-      { label: "Thu", value: 0 },
-      { label: "Chi", value: 1 },
-    ];
-    const list = [
-      {
-        name: "Tiền mặt",
-        icon: "game",
-        amount: "500000",
-        color: "#F44336",
-      },
-      {
-        name: "Thẻ",
-        icon: "flight-takeoff",
-        amount: "400000",
-        color: "#4CAF50",
-      },
-      {
-        name: "Thẻ",
-        icon: "flight-takeoff",
-        amount: "300000",
-        color: "#333fas",
-      },
-    ];
+   
+    
 
     const setData = (item) =>{ // 
       setChooseData(item) 
@@ -163,6 +193,7 @@ const ModalPoup =({visible, children}) => {
           setData(item.icon)
       }
       const renderItem = ({item, index}) =>(
+        
           <TouchableOpacity 
               key={index}
               onPress={() => [onPressItem(item) , setVisible(false)]}
@@ -178,7 +209,7 @@ const ModalPoup =({visible, children}) => {
               justifyContent: 'center'
            }}>
               <Image 
-                  source={item.icon}
+                 source={{ uri: item.icon }}
                   resizeMode="contain"
                   style={{ 
                       height: 20,
@@ -188,12 +219,14 @@ const ModalPoup =({visible, children}) => {
               />
           </View>
           </TouchableOpacity>
+         
+          
       )
       return (
           <FlatList
                   data={featuresDatas}
                   numColumns={3}
-                  columnWrapperStyle={{ justifyContent: 'space-between' }}
+                  columnWrapperStyle={{ justifyContent: 'space-around' }}
                   keyExtractor={item =>`${item.id}`}
                   renderItem={renderItem}
                   style={{ marginTop: SIZES.padding }}
@@ -243,19 +276,19 @@ const ModalPoup =({visible, children}) => {
       setLoading(true);
       axios
         .post(
-          `${BASE_URL}/wallet`,
+          `${BASE_URL}/category`,
           {
             name,
-            icon,
-            amount,
-            color: chooseDataColor
+            icon:chooseData,
+            color: chooseDataColor,
+            parent_id: post
           },
           {headers: {Authorization: `Bearer ${userInfo.token}`}},
         )
         .then(res => {
           let post = res.data;
           setLoading(false);
-          navigation.navigate('Wallet', {
+          navigation.navigate('Home1', {
             post: post,
           });
           console.log(res.data);
@@ -271,16 +304,16 @@ const ModalPoup =({visible, children}) => {
         <View style={styles.container}>
         <Spinner visible={loading} />
           <View style={[styles.box1]}>
-            <Text>Thêm Ví</Text>
+            <Text>Thêm danh mục</Text>
             
           </View>
   
           <View style={[styles.box2]}>
           <View style={styles.viewText3}>
           <ListItem.Content>
-                  <ListItem.Title>Tên Ví</ListItem.Title>
+                  <ListItem.Title>Tên danh mục</ListItem.Title>
                   <TextInput
-        placeholder="Title"
+        placeholder="Titel"
         style={styles.input}
         value={name}
         onChangeText={val => {
@@ -288,24 +321,15 @@ const ModalPoup =({visible, children}) => {
         }}
       />
                     
-                </ListItem.Content>
+    </ListItem.Content>
             </View>
-            <View style={styles.viewText3}>
-          <ListItem.Content>
-                  <ListItem.Title>Số Tiền</ListItem.Title>
-                  <TextInput style={{color:'red'}} 
-                  value={amount}
-                  onChangeText={val => {
-                  setMount(val);
-        }}/>
-                </ListItem.Content>
-            </View>
+            
             <View style={styles.viewText3}>
             <ModalPoup visible={visible}> 
                <View style={{ alignItems:'center' }}>
                  <View style={styles.modalHeader}>
                     <TouchableOpacity onPress={() => setVisible(false)}>
-                         <Image style={styles.modalIcon} source={{ uri: icons.cancel }} />
+                         <Image style={styles.modalIcon} source={{ uri: "https://i.ibb.co/BVnZvWv/cancel.png" }} />
                     </TouchableOpacity>
                     
                  </View>
@@ -317,7 +341,12 @@ const ModalPoup =({visible, children}) => {
              </ModalPoup>
               <Text style={styles.text1}>Thay đổi</Text>
               <View style={{ backgroundColor: chooseDataColor, ...styles.viewIcon1 }}>
-                <TouchableOpacity onPress={() => setVisible(true)} ><Image style={styles.icon1} source={chooseData} />
+                <TouchableOpacity onPress={() => setVisible(true)} >
+                  <Image 
+                  style={styles.icon1} 
+                  //source={chooseData}
+                  source={{ uri: chooseData }}
+                   />
                 </TouchableOpacity>
             </View>
             </View>
@@ -364,7 +393,7 @@ const ModalPoup =({visible, children}) => {
     );
   };
   
-  export default AddWalletScreen;
+  export default AddInOut;
   
   const styles = StyleSheet.create({
     container: {
