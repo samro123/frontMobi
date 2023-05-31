@@ -203,7 +203,31 @@ const Outcome = () => {
   //Api get
 
   const [posts, setPosts] = useState({});
+  const [posts1, setPosts1] = useState({});
   const {userInfo} = useContext(AuthContext);
+
+
+  
+    //get api 
+    const getPosts1 = () => {
+        axios
+          .get(`${BASE_URL}/home/out-come`, {
+            headers: {Authorization: `Bearer ${userInfo.token}`},
+          })
+          .then(res => {
+            console.log(res.data);
+            setPosts1(res.data);
+          })
+          .catch(e => {
+            console.log(`Error on getting posts ${e.message}`);
+          });
+      };
+    
+      useEffect(() => {
+        getPosts1();
+      }, []);
+    
+      //end api get
 
   const getPosts = () => {
     axios
@@ -272,8 +296,8 @@ function renderChart(){
             data={chartData}
             colorScale={colorScales}
             labels={(datum) => `${datum.y}`}
-            radius={SIZES.width * 0.4 - 10}
-            innerRadius={70}
+            radius={SIZES.width * 0.4 - 30}
+            innerRadius={90}
             labelRadius={({innerRadius}) => (SIZES.width * 0.4 + innerRadius) /2.5}
             style={{ 
                 labels: {fill: COLORS.white},
@@ -286,8 +310,10 @@ function renderChart(){
             height={SIZES.height * 0.5}
             />
             <View style={styles.textChart}>
-                <Text>{totalExpenseCount}</Text>
-                <Text>Expenses</Text>
+                <Text style={{
+                 color:'black',
+                 ...FONTS.h1 }}>{posts1.totalOutCome}</Text>
+                <Text>{posts1.totalInCome}</Text>
             </View>
         </View>
     )

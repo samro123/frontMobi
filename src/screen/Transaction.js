@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, TouchableOpacity,Image, Animated, FlatList,Modal, } from 'react-native'
 import React from 'react'
 import {imgages, icons, theme} from '../../src/constants'
-import { BottomPopup } from '../components';
+import { BottomPopup,TextButton } from '../components';
 import { set, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 import { AuthContext } from '../context/AuthContext'
 import { useState,useContext,useEffect, useRef } from 'react'
 import axios from 'axios';
 import {BASE_URL} from '../config'
+import { useIsFocused } from '@react-navigation/native';
 
 
 const {COLORS, SIZES, FONTS} = theme;
@@ -106,6 +107,12 @@ let featuresData = [
 const Transaction = ({navigation}) => {
          
     const [visible, setVisible] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [items, setItems] = useState({})
+    const isFocused = useIsFocused();
+    const setPress = (item)=>{
+      setItems(item)
+    }
 
        const [posts, setPosts] = useState({});
        const {userInfo, logout, isLoading,post} = useContext(AuthContext);
@@ -126,17 +133,73 @@ const Transaction = ({navigation}) => {
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [isFocused]);
 
   //end api get
 
+   //delete api
+   const deletePost = () => {
+    setLoading(true);
+    axios
+      .delete(`${BASE_URL}/transaction/${items.id}`, {
+        headers: {Authorization: `Bearer ${userInfo.token}`},
+      })
+      .then(res => {
+        let post = res.data;
+        setLoading(false);
+        navigation.navigate('Transaction', {post: post});
+        setVisible(false);
+      })
+      .catch(e => {
+        setLoading(false);
+        console.log(`Error on deleting post ${e.message}`);
+      });
+  };
+
   const transactionData = posts && posts.data ? Object.values(posts.data).flatMap(dateData => dateData.transactionDTOS) : [];
 
- 
+  function renderFooter(){
+    return(
+        <View style={{ flexDirection:'row',height: 50,
+        paddingHorizontal: SIZES.padding }}>
+
+                <TextButton lable="Xóa" contentContainerStyle={{ 
+                flex:1,
+                borderRadius: SIZES.radius,
+                marginLeft:SIZES.radius,
+                borderWidth: 2,
+                borderColor:COLORS.green,
+                backgroundColor: COLORS.green,
+
+             }}
+             labelStyle={{ color:COLORS.white, ...FONTS.h3 }}
+             onPress={deletePost}
+             />
+
+            <TextButton lable="Hủy" contentContainerStyle={{ 
+                flex:1,
+                borderRadius: SIZES.radius,
+                marginLeft:SIZES.radius,
+                borderWidth: 2,
+                borderColor:COLORS.green,
+                backgroundColor: COLORS.green,
+
+             }}
+             labelStyle={{ color:COLORS.white, ...FONTS.h3 }}
+             //onPress={createPost}
+             />
+
+        </View>
+    )
+} 
     function renderData(){
       return(
         <View>
-          <Text>Sam</Text>
+          <View style={{ justifyContent:"center" }}>
+          <Text>Bạn Có Muốn Xóa ghi chú</Text>
+          <Text>{items.note}</Text>
+          </View>
+           {renderFooter()}
         </View>
       )
     }
@@ -146,7 +209,7 @@ const Transaction = ({navigation}) => {
         <View style={styles.viewFeature}>
             <View style={{ flex:1 }}><Text>Features</Text></View>
             <View style={styles.viewFeatureHeader}>
-                <TouchableOpacity style={styles.touchTouch1} onPress={() => setVisible(true)}>
+                <TouchableOpacity style={styles.touchTouch1} onPress={() => navigation.navigate("All")}>
                     <Image source={icons.adjust} style={{ width:20, height:20, }}/>
                 </TouchableOpacity>
             </View>
@@ -170,14 +233,26 @@ const Transaction = ({navigation}) => {
       )
 
       const renderItem = ({item})=>(
+            <View style={{ marginTop: SIZES.padding, }}>
+              <View>
+              <Text>{item.modifiedDate}</Text>
+            </View>
            <View style={styles.profileSectionContainer}>
-                <TouchableOpacity style={{ flexDirection:'row', height: 60, alignItems:'center' }}>
+            
+                <TouchableOpacity 
+                style={{ flexDirection:'row', height: 60, alignItems:'center' }}
+                onPress={()=> 
+                  [setVisible(true),
+                  setPress(item)]
+                }
+                
+                >
               {/* Icon */}
-                <View style={{ width: 40, height: 40, alignItems: 'center', borderRadius:15, backgroundColor:COLORS.red, justifyContent:'center' }}>
+                <View style={{ width: 40, height: 40, alignItems: 'center', borderRadius:15, backgroundColor:item.categoryDTO.color, justifyContent:'center' }}>
                 <Image 
-                    source={icons.delivery}
+                    source={{ uri:item.categoryDTO.icon }}
                     resizeMode='contain'
-                    style={{ width: 25, height: 25, tintColor: COLORS.blue }}
+                    style={{ width: 25, height: 25, tintColor: COLORS.white }}
             />
                </View>
 
@@ -186,24 +261,25 @@ const Transaction = ({navigation}) => {
         >
           
            <Text style={{ color: COLORS.gray }}>
-            {item.note}
+            {item.categoryDTO.name}
            </Text>
  
           
-          <Text style={{fontSize: 10}}>{item.price}</Text>
+          <Text style={{fontSize: 10}}>{item.note}</Text>
 
         </View>
 
-        <View
-         
-        >
+        <View >
           
            <Text style={{ color: COLORS.red }}>
-             {item.total}
+             {item.price}
            </Text>
         </View>
 
+      
+
     </TouchableOpacity>
+            </View>
             </View>
       )
       
@@ -245,7 +321,7 @@ export default Transaction
 
 const styles = StyleSheet.create({
     profileSectionContainer:{
-      marginTop: SIZES.padding,
+      //marginTop: SIZES.padding,
       paddingHorizontal: SIZES.padding,
       borderWidth: 1,
       borderColor:COLORS.gray,

@@ -8,7 +8,7 @@ import { AppHeader} from "../components"
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import {BASE_URL} from '../config'
-
+import { useIsFocused } from '@react-navigation/native';
 
 const {COLORS, SIZES, FONTS} = theme;
 
@@ -207,6 +207,7 @@ const Home1 = ({navigation}) => {
 
     const [posts, setPosts] = useState({});
     const {userInfo} = useContext(AuthContext);
+    const isFocused = useIsFocused();
 
   //get api 
   const getPosts = () => {
@@ -224,8 +225,9 @@ const Home1 = ({navigation}) => {
   };
 
   useEffect(() => {
+    console.log('call get post')
     getPosts();
-  }, []);
+  }, [isFocused]);
 
   //end api get
 
@@ -277,8 +279,8 @@ const Home1 = ({navigation}) => {
                 data={chartData}
                 colorScale={colorScales}
                 labels={(datum) => `${datum.y}`}
-                radius={SIZES.width * 0.4 - 10}
-                innerRadius={70}
+                radius={SIZES.width * 0.4 - 30}
+                innerRadius={90}
                 labelRadius={({innerRadius}) => (SIZES.width * 0.4 + innerRadius) /2.5}
                 style={{ 
                     labels: {fill: COLORS.white},
@@ -291,8 +293,10 @@ const Home1 = ({navigation}) => {
                 height={SIZES.height * 0.5}
                 />
                 <View style={styles.textChart}>
-                    <Text>{totalExpenseCount}</Text>
-                    <Text>Expenses</Text>
+                    <Text style={{
+                     color:'black',
+                     ...FONTS.h1 }}>{posts.totalOutCome}</Text>
+                    <Text>{posts.totalInCome}</Text>
                 </View>
             </View>
         )
@@ -304,8 +308,8 @@ const Home1 = ({navigation}) => {
              title={"Home"}
              headerBg={"#60c5a8"}
              iconColor={"black"}
-             menu //or back
-             
+             back
+             onRightPress={()=>navigation.navigate("Tabs")}
              optionalBadge={5}
              right="more-vertical"
              rightFunction={() => console.log('right')}
@@ -512,7 +516,7 @@ const styles = StyleSheet.create({
     textChart:{
         position: "absolute",
         top: '42%',
-        left: '42%',
+        left: '35%',
     },
     touchFlat:{
         marginVertical: SIZES.base,

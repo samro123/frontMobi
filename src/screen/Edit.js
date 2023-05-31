@@ -223,6 +223,8 @@ const ModalPoup =({visible, children}) => {
         .then(res => {
           let post = res.data;
           setLoading(false);
+          // navigation.goBack();
+          console.log(post)
           navigation.navigate('Home1', {post: post});
         })
         .catch(e => {

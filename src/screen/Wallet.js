@@ -7,7 +7,9 @@ import { AddWalletScreen } from "../screen";
 import { AppHeader } from "../components";
 import { AuthContext } from '../context/AuthContext'
 import { useState,useContext,useEffect } from 'react'
+import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
+
 import {BASE_URL} from '../config'
 
 const { COLORS, SIZES, FONTS } = theme;
@@ -35,10 +37,11 @@ const totalAmount = list.reduce((sum, item) => {
   return sum + parseInt(item.amount);
 }, 0);
 
-const Wallet = ({navigation, route}) => {
+const Wallet = ({navigation}) => {
   
   const [posts, setPosts] = useState({});
   const {userInfo} = useContext(AuthContext);
+  const isFocused = useIsFocused();
   
   const total = posts.data ? posts.data.reduce((sum,item)=>{
         return sum + parseInt(item.amount)
@@ -61,7 +64,7 @@ const Wallet = ({navigation, route}) => {
 
   useEffect(() => {
     getPosts();
-  }, [route.params?.post]);
+  }, [isFocused]);
   function renderHeader(){
     return(
       <View>

@@ -126,6 +126,10 @@ const InCategory = () => {
     const [posts, setPosts] = useState({});
     const {userInfo} = useContext(AuthContext);
 
+    const setPress = (item)=>{
+      setItems(item)
+    }
+
   //get api 
   const getPosts = () => {
     axios
@@ -170,7 +174,7 @@ const InCategory = () => {
                   withTiming(0, {
                     duration: 500
                   }))
-                  setItems(item)
+                  setPress(item)
                 }}
             >    
               <Text>{item.name}</Text>
@@ -219,7 +223,10 @@ const InCategory = () => {
                  <BottomPopup 
                    filterModalSharedValue1 = {filterModalSharedValue1}
                     filterModalSharedValue2={filterModalSharedValue2}
-                    //item={setDatas}
+                    id={items.id}
+                    name={items.name}
+                    icon={items.icons}
+                    color={items.color}
                  />
             </View>
         )

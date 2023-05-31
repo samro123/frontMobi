@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, View,Text, TouchableOpacity } from "react-native";
 import {createBottomTabNavigator, BottomTabBar} from "@react-navigation/bottom-tabs"
-import{ Home1, Edit,Wallet, Profile, Transaction} from '../screen'
+import{ Home1, Edit,Wallet, Profile, Transaction, Home} from '../screen'
 import Svg,{Path} from 'react-native-svg'
 import {imgages, icons, theme} from '../constants'
 
@@ -52,7 +52,7 @@ const Tabs = () =>{
                     headerShown: false
                   
                  }}/>
-                <Tab.Screen name="Home2" component={Home1}  options={{ 
+                <Tab.Screen name="Home2" component={Home}  options={{ 
                     tabBarIcon: ({focused}) =>(
                         <View style={styles.viewHome}>
                             <Image 
@@ -67,7 +67,7 @@ const Tabs = () =>{
                     ),
                     headerShown: false
                  }}/>
-                  <Tab.Screen name="WALLET" component={Wallet}  options={{ 
+                  <Tab.Screen name="Wallet" component={Wallet}  options={{ 
                     tabBarIcon: ({focused}) =>(
                         <View style={styles.viewHome}>
                             <Image 
@@ -82,7 +82,7 @@ const Tabs = () =>{
                     ),
                     headerShown: false
                  }}/>
-                   <Tab.Screen name="Profile" component={Transaction}  options={{ 
+                   <Tab.Screen name="Transaction" component={Transaction}  options={{ 
                     tabBarIcon: ({focused}) =>(
                         <View style={styles.viewHome}>
                             <Image 

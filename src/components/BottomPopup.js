@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, KeyboardAvoidingView, SafeAreaView,TextInput } from 'react-native'
-import React from 'react'
+import React, { useState, useContext, useEffect,useRef } from "react";
 import Animated, {
     interpolate,
     useAnimatedStyle,
@@ -10,14 +10,54 @@ import Animated, {
 import {icons, imgages, theme} from '../../src/constants'
 import {ProgressBar, AppHeader, Buttons,TextButton, ProfileValue, LineDiviver,ProfileButtonRadio} from "../components"
 import { ScrollView } from 'react-native-gesture-handler'
-
+import {BASE_URL} from '../config'
+import axios from 'axios';
+import { AuthContext } from '../context/AuthContext'
+import Spinner from 'react-native-loading-spinner-overlay';
 const {COLORS, SIZES, FONTS} = theme;
+import { useNavigation } from '@react-navigation/native';
 
-const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, icon}) => {
-      console.log(name)
+
+const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, icon, color}) => {
+      console.log(icon)
     //const {item} = this.props
     //const {item} = props;
    //console.log(item)
+   const [loading, setLoading] = useState(false);
+   const {userInfo} = useContext(AuthContext);
+   const [note, setNote] = useState(null);
+   const [price, setPrice] = useState(null);
+   //const [categoryId, setCategoryId] = useState(id);
+   const [walletId, setWalletId] = useState(1);
+   const navigation = useNavigation();
+
+    // api post wallet
+    const createPost = () => {
+        setLoading(true);
+        axios
+          .post(
+            `${BASE_URL}/transaction/addTransaction`,
+            {
+              note,
+              price,
+              categoryId:id,
+              walletId,
+            },
+            {headers: {Authorization: `Bearer ${userInfo.token}`}},
+          )
+          .then(res => {
+            let post = res.data;
+            setLoading(false);
+            navigation.navigate('Transaction', {
+              post: post,
+            });
+            console.log(res.data);
+          })
+          .catch(e => {
+            setLoading(false);
+            console.log(`Error on creating post ${e.message}`);
+          });
+      };
     
 
     const filterModalContainerAnimatedStyle = useAnimatedStyle(
@@ -69,6 +109,7 @@ const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, 
 
                  }}
                  labelStyle={{ color:COLORS.white, ...FONTS.h3 }}
+                 onPress={createPost}
                  />
 
             </View>
@@ -82,7 +123,9 @@ const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, 
             <TextInput
               style={{ flex: 1, padding: 10, fontSize: 16 }}
               placeholderTextColor="grey"
-             // onChangeText={setText}
+              value={price}
+              onChangeText={val => {
+              setPrice(val);}}
               underlineColorAndroid="transparent"
               returnKeyType="done"
             />
@@ -91,7 +134,9 @@ const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, 
             <TextInput
               style={{ flex: 1, padding: 10, fontSize: 16 }}
               placeholderTextColor="grey"
-             // onChangeText={setText}
+              value={note}
+              onChangeText={val => {
+              setNote(val);}}
               underlineColorAndroid="transparent"
               returnKeyType="done"
             />
@@ -186,16 +231,17 @@ const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, 
         >
           
            <Text style={{ color: COLORS.gray, ...FONTS.h5 }}>
-             Tu Danh Muc
+             Từ Danh Mục
            </Text>
-          <Text style={{...FONTS.h3}}>sam</Text>
+          <Text style={{...FONTS.h3}}>{name}</Text>
 
         </View>
         
          {/* Icon */}
          <View style={{ width: 40, height: 40, alignItems: 'center', borderRadius:15, backgroundColor:COLORS.red, justifyContent:'center' }}>
                 <Image 
-                    source={icons.delivery}
+                    source={{ uri:icon }}
+
                     resizeMode='contain'
                     style={{ width: 25, height: 25, tintColor: COLORS.blue }}
             />

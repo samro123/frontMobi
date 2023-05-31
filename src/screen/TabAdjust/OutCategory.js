@@ -116,16 +116,41 @@ let featuresData = [
 },
   ]
 
-const OutCategory = (props) => {
+const OutCategory = () => {
 
     const [featuresDatas, setFeaturesData] = useState(featuresData);
     const filterModalSharedValue1 = useSharedValue(SIZES.height);
     const filterModalSharedValue2 = useSharedValue(SIZES.height);
-    const [items, setItems] = useState({})
+    const [items, setItems] = useState({});
+
+    const [posts, setPosts] = useState({});
+    const {userInfo} = useContext(AuthContext);
 
     const setPress = (item)=>{
       setItems(item)
     }
+
+  //get api 
+  const getPosts = () => {
+    axios
+      .get(`${BASE_URL}/category/out-come`, {
+        headers: {Authorization: `Bearer ${userInfo.token}`},
+      })
+      .then(res => {
+        console.log(res.data);
+        setPosts(res.data);
+      })
+      .catch(e => {
+        console.log(`Error on getting posts ${e.message}`);
+      });
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+
+
     function renderFeatures(){
         const headerFeature = ()=>(
             <View style={{ marginBottom: SIZES.padding,justifyContent:'space-between', flexDirection: 'row' }}>
@@ -149,11 +174,10 @@ const OutCategory = (props) => {
                   withTiming(0, {
                     duration: 500
                   }))
-                  
-                setPress(item)
+                  setPress(item)
                 }}
             >    
-              <Text>{item.description}</Text>
+              <Text>{item.name}</Text>
                
                 <View style={{ 
                     height: 50,
@@ -184,7 +208,7 @@ const OutCategory = (props) => {
         return(
             <FlatList
                 ListHeaderComponent={headerFeature}
-                data={featuresDatas}
+                data={posts.data}
                 numColumns={4}
                 columnWrapperStyle={{ justifyContent: 'flex-start' }}
                 keyExtractor={item =>`${item.id}`}
@@ -195,12 +219,13 @@ const OutCategory = (props) => {
       }
       function renderBottom(){
         return(
-            <View >
+            <View style={{ flex:1 }}>
                  <BottomPopup 
                    filterModalSharedValue1 = {filterModalSharedValue1}
                     filterModalSharedValue2={filterModalSharedValue2}
-                     id={items.id}
-                     name={items.total}
+                    id={items.id}
+                    name={items.name}
+                    icon={items.icons}
                  />
             </View>
         )
