@@ -3,7 +3,7 @@ import React,{useState, useContext, useEffect} from 'react'
 import { imgages, icons, theme } from '../../constants';
 //import {imgages, icons, theme} from '../../src/constants'
 import {VictoryPie} from 'victory-native'
-//import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 //import { BottomPopup } from '../components/BottomPopup';
 //import { AppHeader} from "../components"
 const {COLORS, SIZES, FONTS} = theme;
@@ -51,7 +51,7 @@ let categoriesData= [
   {
       id: 2,
       name: "Nutrition",
-      color: COLORS.white,
+      color: COLORS.organ,
       expenses:[
           {
               id: 5,
@@ -312,10 +312,13 @@ function renderChart(){
             height={SIZES.height * 0.5}
             />
             <View style={styles.textChart}>
+            <Text style={{ ...FONTS.h2 }}>Thu Nhập</Text>
                 <Text style={{
-                 color:'black',
-                 ...FONTS.h1 }}>{posts1.totalInCome}</Text>
-                <Text>{posts1.totalOutCome}</Text>
+                 color:'#16FF00',
+                 ...FONTS.h1, textAlign:'center' }}>{posts1.totalInCome}</Text>
+                <Text style={{
+                 color:'#D21312',
+                 ...FONTS.h3 , textAlign:'center'}}>{posts1.totalOutCome}</Text>
             </View>
         </View>
     )
@@ -323,8 +326,8 @@ function renderChart(){
 
 function renderFeatures(){
   const headerFeature = ()=>(
-      <View style={{ marginBottom: SIZES.padding,justifyContent:'space-between', flexDirection: 'row' }}>
-          <View style={{ flex:1 }}><Text>Features</Text></View>
+      <View style={{ marginBottom: SIZES.padding,justifyContent:'space-between', flexDirection: 'row',paddingHorizontal: SIZES.padding }}>
+          <View style={{ flex:1 }}><Text style={{ ...FONTS.h3 }}>Thêm danh mục</Text></View>
           <View style={{ alignItems: 'center',  justifyContent: 'center' }}>
               <TouchableOpacity style={styles.touchTouch1} onPress={()=>navigation.navigate("AddInOut", {post: 2})}>
                   <Image source={icons.more} style={{ width:20, height:20, }}/>
@@ -338,7 +341,7 @@ function renderFeatures(){
       <TouchableOpacity style={styles.touchFeature} 
           onPress={()=> navigation.navigate("Edit", {post: 2, post1: item})}
       >    
-        <Text>{item.name}</Text>
+        <Text numberOfLines={1} ellipsizeMode="tail" >{item.name}</Text>
          
           <View style={{ 
               height: 50,
@@ -378,27 +381,11 @@ function renderFeatures(){
       />
   )
 }
-function renderHeaderChart(){
-  return(
-      <View style={{ flexDirection:'row',marginVertical: SIZES.padding }}>
-          <View style={{ flex:1 }}>
-              <Text>HELLO !</Text>
-              <Text>Sam</Text>
 
-          </View>
-          <View style={{ alignItems: 'center',  justifyContent: 'center' }}>
-              <TouchableOpacity style={{ alignItems: 'center',  justifyContent: 'center', height: 40, width:40,backgroundColor:COLORS.white, borderRadius: 20 }}>
-                  <Image source={icons.uers} style={{ width:20, height:20, }}/>
-              </TouchableOpacity>
-          </View>
-      </View>
-  )
-}
 function renderPromos(){
 
   return(
       <View>
-      {renderHeaderChart()}
       {renderChart()}
       {renderFeatures()}
       </View>
@@ -407,9 +394,11 @@ function renderPromos(){
 }
 
   return (
+    <LinearGradient colors={["#6e45e2" , "#88d3ce"]} style={{ flex:1 }}>
     <ScrollView>
       {renderPromos()}
     </ScrollView>
+    </LinearGradient>
   )
 }
 
@@ -455,8 +444,8 @@ const styles = StyleSheet.create({
   },
   textChart:{
       position: "absolute",
-      top: '42%',
-      left: '42%',
+      top: '35%',
+      left: '35%',
   },
   touchFlat:{
       marginVertical: SIZES.base,

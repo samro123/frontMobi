@@ -3,7 +3,7 @@ import React,{useState, useContext, useEffect} from 'react'
 import { imgages, icons, theme } from '../../constants';
 //import {imgages, icons, theme} from '../../src/constants'
 import {VictoryPie} from 'victory-native'
-//import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 //import { BottomPopup } from '../components/BottomPopup';
 //import { AppHeader} from "../components"
 const {COLORS, SIZES, FONTS} = theme;
@@ -150,16 +150,56 @@ const OutCategory = () => {
   }, []);
 
 
+  //Api Wallet
+  const [postWallet, setPostWallet] = useState({});
+    //get wallet
+    const getPostWallet = () => {
+      axios
+        .get(`${BASE_URL}/wallet`, {
+          headers: {Authorization: `Bearer ${userInfo.token}`},
+        })
+        .then(res => {
+          console.log(res.data);
+          setPostWallet(res.data);
+        })
+        .catch(e => {
+          console.log(`Error on getting posts ${e.message}`);
+        });
+    };
+  
+    useEffect(() => {
+      getPostWallet();
+    }, []);
+    
+   // console.log(postWallet)
+   //id wallet
+   
+   
+   const [idWallet, setidWallet] = useState({});
+
+   useEffect(() => {
+     if (postWallet && postWallet.data && postWallet.data.length > 0) {
+       const data = postWallet.data;
+       const id = data[0].id;
+       setidWallet(id);
+     } else {
+       console.log('Response or data is undefined or empty');
+     }
+   }, [postWallet]);
+
+   
+     
+
+
+  //Api end 
+
+
 
     function renderFeatures(){
         const headerFeature = ()=>(
             <View style={{ marginBottom: SIZES.padding,justifyContent:'space-between', flexDirection: 'row' }}>
-                <View style={{ flex:1 }}><Text>Features</Text></View>
-                <View style={{ alignItems: 'center',  justifyContent: 'center' }}>
-                    <TouchableOpacity style={styles.touchTouch1} onPress={()=>navigation.navigate("AddInOut", {post: 2})}>
-                        <Image source={icons.more} style={{ width:20, height:20, }}/>
-                    </TouchableOpacity>
-                </View>
+                <View style={{ flex:1 }}><Text style={{ ...FONTS.h2 }}>Các danh mục</Text></View>
+                
                 
             </View>
         )
@@ -177,7 +217,7 @@ const OutCategory = () => {
                   setPress(item)
                 }}
             >    
-              <Text>{item.name}</Text>
+              <Text numberOfLines={1} ellipsizeMode="tail">{item.name}</Text>
                
                 <View style={{ 
                     height: 50,
@@ -225,7 +265,9 @@ const OutCategory = () => {
                     filterModalSharedValue2={filterModalSharedValue2}
                     id={items.id}
                     name={items.name}
-                    icon={items.icons}
+                    icon={items.icon}
+                    color={items.color}
+                    idWallet={idWallet}
                  />
             </View>
         )

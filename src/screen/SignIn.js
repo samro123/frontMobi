@@ -44,7 +44,7 @@ const SignIn = ({navigation}) => {
         
           <View style={styles.viewForm1}>
               <View style={styles.viewForm2}>
-                <Text style={styles.textForm2}>Wellcome Back</Text>
+                <Text style={styles.textForm2}>Chào mừng bạn</Text>
                 <Image source={require('../assets/images/waving-hand.png')} style={styles.imgForm2}/>
               </View>
             
@@ -65,7 +65,7 @@ const SignIn = ({navigation}) => {
                   </View>
                 
                   <View style={styles.viewButton}>
-                  <Buttons  btn_text={"Sign In"} on_Press ={()=> { 
+                  <Buttons  btn_text={"Đăng Ký"} on_Press ={()=> { 
                     register(userName, passWord);
                     //alert(`${userInfo.message}`)
                   }}/>
@@ -81,13 +81,13 @@ const SignIn = ({navigation}) => {
             <View style={styles.viewGoogle}>
               <TouchableOpacity style={styles.social_btn}>
                 <Image source={require('../assets/images/search.png')} style={styles.social_img}/>
-                <Text style={styles.textGoogle}>Sign in with Google</Text>
+                <Text style={styles.textGoogle}>Đăng ký với Google</Text>
               </TouchableOpacity>
           
               <View style={styles.viewTextLogin}>
-                  <Text >Ban Da Co Tai Khoan? </Text>
+                  <Text >Bạn Đã Có Tài Khoản? </Text>
                   <TouchableOpacity onPress={()=> navigation.navigate('Login')}>
-                    <Text style={styles.textLogin}>Login</Text>
+                    <Text style={styles.textLogin}>Đăng Nhập</Text>
                   </TouchableOpacity>
               </View>
               
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
   textForm2:{
     fontSize: 20,
      color:'black',
+     ...FONTS.hd
   },
   imgForm2: {
     height: 30,

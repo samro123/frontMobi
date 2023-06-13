@@ -29,7 +29,7 @@ const Tabs = () =>{
                     left: 10,
                     right: 10,
                     elevation: 0,
-                    backgroundColor: '#ffffff',
+                    backgroundColor: '#6E45E2',
                     height: 90,
                     ...styles.shawdow
                     
@@ -42,11 +42,11 @@ const Tabs = () =>{
                             <Image 
                             source={icons.income}
                             resizeMode="contain"
-                            style={{ tintColor: focused ? COLORS.organ : COLORS.gray
+                            style={{ tintColor: focused ? COLORS.black : COLORS.white
                                 ,...styles.img  }}
                             
                             />
-                            <Text style={{ color: focused ? COLORS.organ : COLORS.gray , fontSize: 12 }}>Income</Text>
+                            <Text style={{ color: focused ? COLORS.black : COLORS.white , ...FONTS.h4  }}>Income</Text>
                         </View>
                     ),
                     headerShown: false
@@ -58,11 +58,11 @@ const Tabs = () =>{
                             <Image 
                             source={icons.outcome}
                             resizeMode="contain"
-                            style={{ tintColor: focused ? COLORS.organ : COLORS.gray
+                            style={{ tintColor: focused ? COLORS.black : COLORS.white
                                 ,...styles.img  }}
                             
                             />
-                            <Text style={{ color: focused ? COLORS.organ : COLORS.gray , fontSize: 12 }}>Spend</Text>
+                            <Text style={{ color: focused ? COLORS.black : COLORS.white , ...FONTS.h4 }}>Spend</Text>
                         </View>
                     ),
                     headerShown: false
@@ -73,11 +73,11 @@ const Tabs = () =>{
                             <Image 
                             source={icons.wallet}
                             resizeMode="contain"
-                            style={{ tintColor: focused ? COLORS.organ : COLORS.gray
+                            style={{ tintColor: focused ? COLORS.black : COLORS.white
                                 ,...styles.img  }}
                             
                             />
-                            <Text style={{ color: focused ? COLORS.organ : COLORS.gray , fontSize: 12 }}>Wallet</Text>
+                            <Text style={{ color: focused ? COLORS.black : COLORS.white , ...FONTS.h4  }}>Wallet</Text>
                         </View>
                     ),
                     headerShown: false
@@ -88,11 +88,11 @@ const Tabs = () =>{
                             <Image 
                             source={icons.uers}
                             resizeMode="contain"
-                            style={{ tintColor: focused ? COLORS.organ : COLORS.gray
+                            style={{ tintColor: focused ? COLORS.black : COLORS.white
                                 ,...styles.img  }}
                             
                             />
-                            <Text style={{ color: focused ? COLORS.organ : COLORS.gray , fontSize: 12 }}>Profile</Text>
+                            <Text style={{ color: focused ? COLORS.black : COLORS.white , ...FONTS.h4  }}>Transaction</Text>
                         </View>
                     ),
                     headerShown: false

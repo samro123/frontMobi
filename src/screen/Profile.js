@@ -5,7 +5,7 @@ import {ProgressBar, AppHeader, Buttons,TextButton, ProfileValue, LineDiviver,Pr
 
 const {COLORS, SIZES, FONTS} = theme;
 
-const Profile = () => {
+const Profile = ({navigation}) => {
     const [newCourseNotifition, setNewCourseNotifition] = React.useState(false)
     const [studyReminder, setStudyReminder] = React.useState(false)
     function renderProfileCard(){
@@ -147,9 +147,31 @@ const Profile = () => {
     )
   }
 
+  function renderHeader(){
+    return(
+      <View >
+           <AppHeader
+             title={"Cá Nhân"}
+             headerBg={"#60c5a8"}
+             iconColor={"black"}
+             back
+             onRightPress={()=>navigation.navigate("Home1")}
+             optionalBadge={5}
+             right="more-vertical"
+             rightFunction={() => console.log('right')}
+             optionalIcon="bell"
+             optionalFunc={() => console.log('optional')}
+            />
+      </View>
+    )
+  }
+
   return (
     <View 
     style={{ flex: 1, backgroundColor: COLORS.white }}>
+      <View>
+        {renderHeader()}
+      </View>
       <ScrollView contentContainerStyle={{ 
         paddingHorizontal:SIZES.padding,
         paddingBottom: 150

@@ -12,9 +12,6 @@ const {COLORS, SIZES, FONTS} = theme;
 
 const Login = ({navigation}) => {
 
- 
-
-
     const [userName, setName] = useState(null);
     const [passWord, setPassWord] = useState(null);
     const {isLoading, login} = useContext(AuthContext);
@@ -30,7 +27,7 @@ const Login = ({navigation}) => {
           <View style={styles.viewForm1}>
          
               <View style={styles.viewForm2}>
-                <Text style={styles.textForm2}>Wellcome Back</Text>
+                <Text style={styles.textForm2}>Chào mừng bạn</Text>
                 <Image source={imgages.hander} style={styles.imgForm2}/>
               </View>
                 {/*login form email */}
@@ -50,7 +47,7 @@ const Login = ({navigation}) => {
                   </View>
                 
                   <View style={styles.viewButton}>
-                  <Buttons  btn_text={"Sign In"} on_Press ={()=> {login(userName, passWord)}}/>
+                  <Buttons  btn_text={"Đăng Nhập"} on_Press ={()=> {login(userName, passWord)}}/>
                   </View>
 
 
@@ -63,15 +60,15 @@ const Login = ({navigation}) => {
             <View style={styles.viewGoogle}>
               <TouchableOpacity style={styles.social_btn}>
                 <Image source={require('../assets/images/search.png')} style={styles.social_img}/>
-                <Text style={styles.textGoogle}>Sign in with Google</Text>
+                <Text style={styles.textGoogle}>Đăng nhập với Google</Text>
               </TouchableOpacity>
               <TouchableOpacity>
-                <Text style={styles.textForgot}>Forgot Password?</Text>
+                <Text style={styles.textForgot}>Quên mật khẩu?</Text>
               </TouchableOpacity>
               <View style={styles.viewTextLogin}>
-                  <Text >Ban Chua Co Tai Khoan?</Text>
+                  <Text >Bạn Chưa Có Tài Khoản?</Text>
                   <TouchableOpacity onPress={()=> navigation.navigate('SignIn')}>
-                    <Text style={styles.textLogin}>Dang ki</Text>
+                    <Text style={styles.textLogin}>Đăng ký</Text>
 
                   </TouchableOpacity>
                   
@@ -122,7 +119,7 @@ const styles = StyleSheet.create({
   textForm2:{
     fontSize: 30,
      color:'black',
-     ...FONTS.h2,
+     ...FONTS.hd,
      marginRight: 10
   },
   imgForm2: {

@@ -120,7 +120,7 @@ const Onboarding = ({navigation}) => {
              {/*Button 
             <Buttons btn_text={"Sign in"} on_Press={()=>navigation.navigate("Home1")}/> */}
              <TextButton 
-                    lable="Login"
+                    lable="Đăng Nhập"
                     contentContainerStyle={
                       styles.btnLogin
                     }
@@ -128,12 +128,12 @@ const Onboarding = ({navigation}) => {
                     onPress={()=>navigation.navigate("Login")}
               />
             <TextButton 
-                    lable="Insign"
+                    lable="Đăng Ký"
                     contentContainerStyle={
                       styles.btnLogin
                     }
                     labelStyle={{ color:COLORS.white , ...FONTS.h2}}
-                    onPress={()=>navigation.navigate("Tabs")}
+                    onPress={()=>navigation.navigate("SignIn")}
               />
           </View>
         </View>

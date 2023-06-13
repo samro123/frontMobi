@@ -8,6 +8,7 @@ import { useState,useContext,useEffect, useRef } from 'react'
 import axios from 'axios';
 import {BASE_URL} from '../config'
 import { useIsFocused } from '@react-navigation/native';
+import { AppHeader, LineDiviver } from "../components";
 
 
 const {COLORS, SIZES, FONTS} = theme;
@@ -147,7 +148,7 @@ const Transaction = ({navigation}) => {
       .then(res => {
         let post = res.data;
         setLoading(false);
-        navigation.navigate('Transaction', {post: post});
+        navigation.navigate('Home1', {post: post});
         setVisible(false);
       })
       .catch(e => {
@@ -186,7 +187,7 @@ const Transaction = ({navigation}) => {
 
              }}
              labelStyle={{ color:COLORS.white, ...FONTS.h3 }}
-             //onPress={createPost}
+             onPress={() => setVisible(false)}
              />
 
         </View>
@@ -195,9 +196,9 @@ const Transaction = ({navigation}) => {
     function renderData(){
       return(
         <View>
-          <View style={{ justifyContent:"center" }}>
-          <Text>Bạn Có Muốn Xóa ghi chú</Text>
-          <Text>{items.note}</Text>
+          <View style={{ justifyContent:"center", marginBottom: 10, paddingHorizontal: 10 }}>
+          <Text style={{ justifyContent:"center", alignItems:"center",textAlign: 'center', ...FONTS.h3 }} >Bạn Có Muốn Xóa ghi chú</Text>
+          <Text style={{ justifyContent:"center", alignItems:"center",textAlign: 'center', ...FONTS.h2 }}>{items.note}</Text>
           </View>
            {renderFooter()}
         </View>
@@ -207,7 +208,7 @@ const Transaction = ({navigation}) => {
 
       const headerFeature = ()=>(
         <View style={styles.viewFeature}>
-            <View style={{ flex:1 }}><Text>Features</Text></View>
+            <View style={{ flex:1 }}><Text style={{ ...FONTS.hn}}>Thêm giao dịch</Text></View>
             <View style={styles.viewFeatureHeader}>
                 <TouchableOpacity style={styles.touchTouch1} onPress={() => navigation.navigate("All")}>
                     <Image source={icons.adjust} style={{ width:20, height:20, }}/>
@@ -226,16 +227,15 @@ const Transaction = ({navigation}) => {
                <View>
                   {renderData()}
                </View>
-               <Text style={styles.modalText}>Chon icon phu hop voi ban</Text>
              </ModalPoup>
             
         </View>
       )
 
       const renderItem = ({item})=>(
-            <View style={{ marginTop: SIZES.padding, }}>
-              <View>
-              <Text>{item.modifiedDate}</Text>
+            <View style={{ marginTop: SIZES.padding }}>
+              <View style={{ marginBottom:3 }}>
+              <Text style={{ ...FONTS.hn }}>{item.modifiedDate}</Text>
             </View>
            <View style={styles.profileSectionContainer}>
             
@@ -248,7 +248,7 @@ const Transaction = ({navigation}) => {
                 
                 >
               {/* Icon */}
-                <View style={{ width: 40, height: 40, alignItems: 'center', borderRadius:15, backgroundColor:item.categoryDTO.color, justifyContent:'center' }}>
+                <View style={{ width: 40, height: 40, alignItems: 'center', borderRadius:10, backgroundColor:item.categoryDTO.color, justifyContent:'center' }}>
                 <Image 
                     source={{ uri:item.categoryDTO.icon }}
                     resizeMode='contain'
@@ -260,19 +260,19 @@ const Transaction = ({navigation}) => {
          style={{ flex:1 , marginLeft: SIZES.radius}}  
         >
           
-           <Text style={{ color: COLORS.gray }}>
+           <Text style={{ color: COLORS.black, ...FONTS.h3 }}>
             {item.categoryDTO.name}
            </Text>
  
           
-          <Text style={{fontSize: 10}}>{item.note}</Text>
+          <Text style={{fontSize: 10, ...FONTS.h4}}>{item.note}</Text>
 
         </View>
 
         <View >
           
-           <Text style={{ color: COLORS.red }}>
-             {item.price}
+           <Text style={{ color: COLORS.red,...FONTS.h4 }}>
+             {item.price} đ
            </Text>
         </View>
 
@@ -294,10 +294,32 @@ const Transaction = ({navigation}) => {
     />
       )
     }
+
+    function renderHeader(){
+      return(
+        <View >
+             <AppHeader
+               title={"Giao dich"}
+               headerBg={"#60c5a8"}
+               iconColor={"black"}
+               menu //or back
+               
+               optionalBadge={5}
+               right="more-vertical"
+               rightFunction={() => console.log('right')}
+               optionalIcon="bell"
+               optionalFunc={() => console.log('optional')}
+              />
+        </View>
+      )
+    }
    
   return (
     <View style={{ flex: 1 }}>
-    <View style={{ paddingHorizontal: SIZES.padding }}>
+      <View >
+        {renderHeader()}
+      </View>
+    <View style={{ paddingHorizontal: SIZES.padding, backgroundColor:COLORS.white,flex: 1 , marginBottom: 100 }}>
         {renderListTransaction()}
 
        
@@ -323,14 +345,21 @@ const styles = StyleSheet.create({
     profileSectionContainer:{
       //marginTop: SIZES.padding,
       paddingHorizontal: SIZES.padding,
-      borderWidth: 1,
-      borderColor:COLORS.gray,
-      borderRadius: 10
+      borderWidth: 2,
+      borderColor:COLORS.pink,
+      borderRadius: 10,
+      borderRightWidth: 8,
+      borderRightColor:COLORS.pink,
+      borderBottomWidth: 8,
+      borderBottomColor:COLORS.pink,
+      backgroundColor:"#ffecd2",
+      
     },
     viewFeature:{
-      marginBottom: SIZES.padding,
+      //marginBottom: 10,
       justifyContent:'space-between', 
-      flexDirection: 'row'
+      flexDirection: 'row',
+     
   },
   viewFeatureHeader:{
       alignItems: 'center', 

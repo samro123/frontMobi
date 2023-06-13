@@ -4,14 +4,15 @@ import { Avatar, ListItem } from "react-native-elements";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { AddWalletScreen } from "../screen";
-import { AppHeader } from "../components";
+import { AppHeader, LineDiviver } from "../components";
 import { AuthContext } from '../context/AuthContext'
+
 import { useState,useContext,useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 
-import {BASE_URL} from '../config'
 
+import {BASE_URL} from '../config'
 const { COLORS, SIZES, FONTS } = theme;
 const list = [
   {
@@ -42,12 +43,24 @@ const Wallet = ({navigation}) => {
   const [posts, setPosts] = useState({});
   const {userInfo} = useContext(AuthContext);
   const isFocused = useIsFocused();
+
+  
+
+  if (posts && posts.data && posts.data.length > 0) {
+    const data = posts.data;
+    const id = data[0].id;
+    console.log(id); // output: 1
+  } else {
+    console.log('Response or data is undefined or empty');
+  }
   
   const total = posts.data ? posts.data.reduce((sum,item)=>{
         return sum + parseInt(item.amount)
   },0) : 0;
   
-  console.log(total)
+  //console.log(total)
+
+  //get wallet
   const getPosts = () => {
     axios
       .get(`${BASE_URL}/wallet`, {
@@ -84,16 +97,16 @@ const Wallet = ({navigation}) => {
     )
   }
   return (
-    <ScrollView>
+    
     <View style={styles.container}>
       <View style={[styles.box1]}>
         {renderHeader()}
       </View>
-
+       <ScrollView>
       <View style={[styles.box2]}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text style={{ fontSize: 20, opacity: 0.5 }}>TÀI KHOẢN</Text>
-          <Text style={{ fontSize: 20, color: "green" }}>{total} đ</Text>
+          <Text style={{ ...FONTS.h1, opacity: 0.5 }}>TÀI KHOẢN</Text>
+          <Text style={{ ...FONTS.h2, color: "green" }}>{total} đ</Text>
         </View>
         <View>
           {posts.data&&posts.data.map((l, i) => (
@@ -113,15 +126,16 @@ const Wallet = ({navigation}) => {
                     borderRadius: 20,
                     marginBottom: 10,
                   }}>
-                  <Image style={styles.icon1} source={icons.game} />
+                  <Image style={styles.icon1} source={icons.wallet2} />
                 </View>
                 <ListItem.Content>
-                  <ListItem.Title>{l.name}</ListItem.Title>
+                  <ListItem.Title><Text style={{ ...FONTS.h3 }}>{l.name}</Text></ListItem.Title>
                   <ListItem.Subtitle style={{ color: "green" }}>
                     {l.amount} đ
                   </ListItem.Subtitle>
                 </ListItem.Content>
               </ListItem>
+              <LineDiviver/>
             </TouchableOpacity>
           ))}
         </View>
@@ -141,13 +155,11 @@ const Wallet = ({navigation}) => {
           </View>
         </TouchableOpacity>
       </View>
-
-      <View style={[styles.box3]}>
-        <Text>Foteer</Text>
-      </View>
+      </ScrollView>
+     
     </View>
 
-    </ScrollView>
+    
   );
 };
 
@@ -171,6 +183,7 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     padding: 30,
     // justifyContent: "center",
+    marginBottom: 50
   },
 
   //footer
@@ -179,6 +192,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#e3aa1a",
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 20,
+    marginTop: 20
   },
   viewIcon1: {
     alignItems: "center",

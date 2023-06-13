@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Animated, FlatList, TouchableOpacity } from 'react-native'
 import React from 'react'
 import {icons, imgages, theme} from '../../src/constants'
-import { LineDiviver } from '../components';
+import { LineDiviver,AppHeader } from '../components';
 import InCategory from './TabAdjust/InCategory';
 import OutCategory from './TabAdjust/OutCategory';
 
@@ -93,7 +93,7 @@ const Tabs = ({scrollX ,onTabPress})=>{
                         style={{ flex: 1, paddingHorizontal: 15,alignItems: 'center',  justifyContent: 'center' }}
                         onPress={()=>onTabPress(index)}
                     >
-                        <Text>{item.label}</Text>
+                        <Text style={{ ...FONTS.hn, color:COLORS.white }}>{item.label}</Text>
                     </TouchableOpacity>
                 )
             })}
@@ -115,7 +115,7 @@ const AllCategory = ({navigation}) => {
         return(
             <View style={{ flex:1 }}>
                 {/*Tabs*/}
-                <View style={{ height: 60 }}>
+                <View style={{ height: 60,backgroundColor:'#6E45E2' }}>
                     <Tabs scrollX={scrollX} onTabPress={onTabPress}/>
                 </View>
                 {/*Liner Divider*/}
@@ -145,8 +145,8 @@ const AllCategory = ({navigation}) => {
                     renderItem={({item,index}) =>{
                         return(
                             <View style={{ width:SIZES.width }}>
-                                {index == 0 && <InCategory/>}
-                                {index == 1 && <OutCategory/>}
+                                {index == 0 && <OutCategory/>}
+                                {index == 1 && <InCategory/>}
                             </View>
                         )
                     }}
@@ -155,8 +155,31 @@ const AllCategory = ({navigation}) => {
         )
     }
 
+
+    function renderHeader(){
+        return(
+          <View >
+               <AppHeader
+                 title={"Thêm Giao Dịch"}
+                 headerBg={"#60c5a8"}
+                 iconColor={"black"}
+                 back
+                 onRightPress={()=>navigation.navigate("Transaction")}
+                 optionalBadge={5}
+                 right="more-vertical"
+                 rightFunction={() => console.log('right')}
+                 optionalIcon="bell"
+                 optionalFunc={() => console.log('optional')}
+                />
+          </View>
+        )
+      }
+
   return (
     <View style={{ flex: 1 , backgroundColor:COLORS.white }}>
+        <View>
+            {renderHeader()}
+        </View>
       {renderContent()}
     </View>
   )

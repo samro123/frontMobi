@@ -13,6 +13,7 @@ import { BASE_URL } from '../../config';
 import { useNavigation } from '@react-navigation/native';
 import { set, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 import { BottomPopup } from '../../components';
+import { useIsFocused } from '@react-navigation/native';
 
 
 
@@ -121,10 +122,15 @@ const InCategory = () => {
     const [featuresDatas, setFeaturesData] = useState(featuresData);
     const filterModalSharedValue1 = useSharedValue(SIZES.height);
     const filterModalSharedValue2 = useSharedValue(SIZES.height);
-    const [items, setItems] = useState({});
+    const [item1s, setItems] = useState({});
 
     const [posts, setPosts] = useState({});
+    const [posts1, setPosts1] = useState({});
+    const [walletId, setWalletId] = useState({});
     const {userInfo} = useContext(AuthContext);
+    const isFocused = useIsFocused();
+    
+
 
     const setPress = (item)=>{
       setItems(item)
@@ -149,17 +155,58 @@ const InCategory = () => {
     getPosts();
   }, []);
 
+   //Api Wallet
+   const [postWallet, setPostWallet] = useState({});
+   //get wallet
+   const getPostWallet = () => {
+     axios
+       .get(`${BASE_URL}/wallet`, {
+         headers: {Authorization: `Bearer ${userInfo.token}`},
+       })
+       .then(res => {
+         console.log(res.data);
+         setPostWallet(res.data);
+       })
+       .catch(e => {
+         console.log(`Error on getting posts ${e.message}`);
+       });
+   };
+ 
+   useEffect(() => {
+     getPostWallet();
+   }, []);
+   
+  // console.log(postWallet)
+  //id wallet
+  
+  
+  const [idWallet, setidWallet] = useState({});
+
+  useEffect(() => {
+    if (postWallet && postWallet.data && postWallet.data.length > 0) {
+      const data = postWallet.data;
+      const id = data[0].id;
+      setidWallet(id);
+    } else {
+      console.log('Response or data is undefined or empty');
+    }
+  }, [postWallet]);
+
+  
+    
+
+
+ //Api end 
+
+
+
+
 
 
     function renderFeatures(){
         const headerFeature = ()=>(
             <View style={{ marginBottom: SIZES.padding,justifyContent:'space-between', flexDirection: 'row' }}>
-                <View style={{ flex:1 }}><Text>Features</Text></View>
-                <View style={{ alignItems: 'center',  justifyContent: 'center' }}>
-                    <TouchableOpacity style={styles.touchTouch1} onPress={()=>navigation.navigate("AddInOut", {post: 2})}>
-                        <Image source={icons.more} style={{ width:20, height:20, }}/>
-                    </TouchableOpacity>
-                </View>
+                <View style={{ flex:1 }}><Text style={{ ...FONTS.h2 }}>Các danh mục</Text></View>
                 
             </View>
         )
@@ -223,10 +270,11 @@ const InCategory = () => {
                  <BottomPopup 
                    filterModalSharedValue1 = {filterModalSharedValue1}
                     filterModalSharedValue2={filterModalSharedValue2}
-                    id={items.id}
-                    name={items.name}
-                    icon={items.icons}
-                    color={items.color}
+                    id={item1s.id}
+                    name={item1s.name}
+                    icon={item1s.icon}
+                    color={item1s.color}
+                    idWallet={idWallet}
                  />
             </View>
         )

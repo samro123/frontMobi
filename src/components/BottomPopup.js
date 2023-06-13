@@ -16,22 +16,21 @@ import { AuthContext } from '../context/AuthContext'
 import Spinner from 'react-native-loading-spinner-overlay';
 const {COLORS, SIZES, FONTS} = theme;
 import { useNavigation } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 
 
-const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, icon, color}) => {
-      console.log(icon)
-    //const {item} = this.props
-    //const {item} = props;
-   //console.log(item)
+
+const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, icon, color, idWallet}) => {
+      
    const [loading, setLoading] = useState(false);
    const {userInfo} = useContext(AuthContext);
    const [note, setNote] = useState(null);
    const [price, setPrice] = useState(null);
-   //const [categoryId, setCategoryId] = useState(id);
-   const [walletId, setWalletId] = useState(1);
-   const navigation = useNavigation();
+   const [posts, setPosts] = useState({});
+   const navigation = useNavigation(); 
+   const isFocused = useIsFocused();
 
-    // api post wallet
+    // api post transaction
     const createPost = () => {
         setLoading(true);
         axios
@@ -41,7 +40,7 @@ const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, 
               note,
               price,
               categoryId:id,
-              walletId,
+              walletId:idWallet,
             },
             {headers: {Authorization: `Bearer ${userInfo.token}`}},
           )
@@ -58,6 +57,8 @@ const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, 
             console.log(`Error on creating post ${e.message}`);
           });
       };
+      
+    
     
 
     const filterModalContainerAnimatedStyle = useAnimatedStyle(
@@ -123,6 +124,7 @@ const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, 
             <TextInput
               style={{ flex: 1, padding: 10, fontSize: 16 }}
               placeholderTextColor="grey"
+              placeholder="Số tiền"
               value={price}
               onChangeText={val => {
               setPrice(val);}}
@@ -134,6 +136,7 @@ const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, 
             <TextInput
               style={{ flex: 1, padding: 10, fontSize: 16 }}
               placeholderTextColor="grey"
+              placeholder="Tên giao dịch"
               value={note}
               onChangeText={val => {
               setNote(val);}}
@@ -187,7 +190,7 @@ const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, 
                 <Text style={{ flex:1,textAlign: 'center', ...FONTS.h1 }}></Text>
 
                 <TextButton
-                lable="Cancel"
+                lable="Hủy"
                 contentContainerStyle={{ 
                     width: 60, 
                     backgroundColor: null
@@ -230,7 +233,7 @@ const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, 
          style={{ flex:1 , marginLeft: SIZES.radius}}  
         >
           
-           <Text style={{ color: COLORS.gray, ...FONTS.h5 }}>
+           <Text style={{ color: COLORS.black, ...FONTS.h4 }}>
              Từ Danh Mục
            </Text>
           <Text style={{...FONTS.h3}}>{name}</Text>
@@ -238,12 +241,12 @@ const BottomPopup = ({filterModalSharedValue1,filterModalSharedValue2,id, name, 
         </View>
         
          {/* Icon */}
-         <View style={{ width: 40, height: 40, alignItems: 'center', borderRadius:15, backgroundColor:COLORS.red, justifyContent:'center' }}>
+         <View style={{ width: 40, height: 40, alignItems: 'center', borderRadius:15, backgroundColor:color, justifyContent:'center' }}>
                 <Image 
                     source={{ uri:icon }}
 
                     resizeMode='contain'
-                    style={{ width: 25, height: 25, tintColor: COLORS.blue }}
+                    style={{ width: 25, height: 25, tintColor: COLORS.white }}
             />
                </View>
 

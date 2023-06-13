@@ -18,6 +18,7 @@ import {
   import axios from 'axios';
   import { AuthContext } from '../context/AuthContext'
   import Spinner from 'react-native-loading-spinner-overlay';
+  import { AppHeader, TextButton } from "../components";
 
 
   const { COLORS, SIZES, FONTS } = theme;
@@ -265,23 +266,42 @@ const ModalPoup =({visible, children}) => {
           console.log(`Error on creating post ${e.message}`);
         });
     };
+
+    function renderHeader(){
+      return(
+        <View >
+             <AppHeader
+               title={"Thêm ví"}
+               headerBg={"#60c5a8"}
+               iconColor={"black"}
+               back
+               onRightPress={()=>navigation.navigate('Wallet')}
+               optionalBadge={5}
+               right="more-vertical"
+               rightFunction={() => console.log('right')}
+               optionalIcon="bell"
+               optionalFunc={() => console.log('optional')}
+              />
+        </View>
+      )
+    }
   
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
         <Spinner visible={loading} />
-          <View style={[styles.box1]}>
-            <Text>Thêm Ví</Text>
-            
-          </View>
+        <View >
+          {renderHeader()}
+        </View>
   
           <View style={[styles.box2]}>
           <View style={styles.viewText3}>
           <ListItem.Content>
-                  <ListItem.Title>Tên Ví</ListItem.Title>
+                  <ListItem.Title><Text style={{ ...FONTS.h3 }}>Tên Ví</Text></ListItem.Title>
                   <TextInput
-        placeholder="Title"
-        style={styles.input}
+        placeholder="Ví"
+        style={{ flex: 1, padding: 1, fontSize: 20 }}
+        placeholderTextColor="grey"
         value={name}
         onChangeText={val => {
           setName(val);
@@ -292,8 +312,11 @@ const ModalPoup =({visible, children}) => {
             </View>
             <View style={styles.viewText3}>
           <ListItem.Content>
-                  <ListItem.Title>Số Tiền</ListItem.Title>
-                  <TextInput style={{color:'red'}} 
+                  <ListItem.Title><Text style={{ ...FONTS.h3 }}>Số Tiền</Text></ListItem.Title>
+                  <TextInput 
+                    placeholder="0 đ"
+                    style={{ flex: 1, padding: 1, fontSize: 20 }}
+                    placeholderTextColor="grey" 
                   value={amount}
                   onChangeText={val => {
                   setMount(val);
@@ -347,12 +370,18 @@ const ModalPoup =({visible, children}) => {
               
             </View>
   
-            <View style={styles.viewText3}>
-              <Text style={styles.text1}>Thêm người dùng ví</Text>
-            </View>
+          
   
             <View style={{ flex: 1, alignItems: "flex-end", width: "90%", marginTop:20 }}>
-              <Button  title="Lưu nè" style={{width:100}} onPress={createPost}/>
+              
+              <TextButton 
+                    lable="Thêm"
+                    contentContainerStyle={
+                      styles.btnLogin
+                    }
+                    labelStyle={{ color:COLORS.white , ...FONTS.h2}}
+                    onPress={createPost}
+              />
             </View>
           </View>
   
@@ -382,9 +411,9 @@ const ModalPoup =({visible, children}) => {
     box2: {
       flex: 8,
       // backgroundColor: "#8BC34A",
-      alignItems: "stretch",
+      alignItems: "center",
       padding: 30,
-      // justifyContent: "center",
+       justifyContent: "center",
     },
   
     //footer
@@ -419,8 +448,8 @@ const ModalPoup =({visible, children}) => {
       tintColor: COLORS.white,
     },
     text1: {
-      fontSize: SIZES.h3,
       marginBottom: 10,
+      ...FONTS.h3
     },
 
     modalBackGround:{
@@ -455,12 +484,25 @@ const ModalPoup =({visible, children}) => {
 
   viewIcon2:{
     alignItems: "center",
-      justifyContent: "center",
+    justifyContent: "center",
       width: 50,
       height: 50,
       borderRadius: 20,
       marginBottom: 10,
       // marginLeft: 55
+},
+ btnLogin:{
+  height: 60,
+  width:"50%",
+  paddingHorizontal: SIZES.radius,
+  borderRadius: 10,
+  backgroundColor: "#C780FA",
+  marginTop: 10,
+  borderStyle: 'solid',
+  borderWidth: 10,
+  borderColor:"#E3ACF9",
+
+
 },
   });
   

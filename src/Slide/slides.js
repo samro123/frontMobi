@@ -6,7 +6,7 @@ export default [
     {
         id: 1,
         title: 'Kiểm soát chi tiêu của bạn',
-        description: 'font name you registered with is diff ',
+        description: 'Quản lí',
         image: onboarding1,
     },
     {

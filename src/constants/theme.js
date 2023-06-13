@@ -8,7 +8,11 @@ async function loadFonts() {
     await Font.loadAsync({
       'font': require('../assets/fonts/font.ttf'),
       'font1': require('../assets/fonts/Merriweather-BoldItalic.ttf'),
-      'font2': require('../assets/fonts/Merriweather-Light.ttf')
+      'font2': require('../assets/fonts/Merriweather-Light.ttf'),
+      'font3': require('../assets/fonts/Montserrat-VariableFont_wght.ttf'),
+      'font4': require('../assets/fonts/Anton-Regular.ttf'),
+      'font5': require('../assets/fonts/Arvo-Regular.ttf'),
+      
     });
   }
   
@@ -56,10 +60,13 @@ export const SIZES = {
 
 export const FONTS={
     h1:{  fontFamily: 'font1', fontSize: SIZES.h1, lineHeight: 36},
-    h2: { fontFamily: "font2", fontSize: SIZES.h2, lineHeight: 30 },
+    h2: { fontFamily: "font1", fontSize: SIZES.h2, lineHeight: 30 },
     h3: { fontFamily: "font2", fontSize: SIZES.h3, lineHeight: 22 },
     h4: { fontFamily: "font2", fontSize: SIZES.h4, lineHeight: 22 },
     h5: { fontFamily: "font2", fontSize: SIZES.h5, lineHeight: 22 },
+    hd: { fontFamily: "font1", fontSize: SIZES.h2, lineHeight: 40 },
+    hn: { fontFamily: "font1", fontSize: SIZES.h3, lineHeight: 40 },
+    
     
 
 };

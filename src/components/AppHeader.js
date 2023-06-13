@@ -33,11 +33,11 @@ const AppHeader = ({ style, menu, back, title, right, onRightPress, optionalBtn,
 	)
 	const TitleView = () => (
 		<View style={styles.titleView}>
-			<Title style={{ color: iconColor, textAlign: titleAlight }}>{title}</Title>
+			<Title style={{ color: iconColor, textAlign: titleAlight, ...FONTS.hd }}>{title}</Title>
 		</View>
 	)
 	return (
-		<Surface style={[styles.header, style, { backgroundColor: headerBg }]}>
+		<Surface style={[styles.header, style, { backgroundColor: "#6e45e2" }]}>
 			<LeftView />
 			<TitleView />
 			<RightView />
@@ -49,7 +49,7 @@ export default AppHeader
 
 const styles = StyleSheet.create({
 	header: {
-		height: 50,
+		height: 55,
 		elevation: 8,
 		justifyContent: 'space-between',
 		alignItems: 'center',
@@ -63,6 +63,9 @@ const styles = StyleSheet.create({
 	},
 	titleView: {
 		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		
 	},
 	rightView: {
 		justifyContent: 'flex-end',

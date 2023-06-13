@@ -50,7 +50,7 @@ let categoriesData= [
     {
         id: 2,
         name: "Nutrition",
-        color: COLORS.white,
+        color: COLORS.organ,
         expenses:[
             {
                 id: 5,
@@ -293,10 +293,13 @@ const Home1 = ({navigation}) => {
                 height={SIZES.height * 0.5}
                 />
                 <View style={styles.textChart}>
+                    <Text style={{ ...FONTS.h2 }}>Chi Phí</Text>
                     <Text style={{
-                     color:'black',
-                     ...FONTS.h1 }}>{posts.totalOutCome}</Text>
-                    <Text>{posts.totalInCome}</Text>
+                     color:'#16FF00',
+                     ...FONTS.h1, textAlign:'center'}}>{posts.totalOutCome}đ</Text>
+                    <Text style={{
+                     color:'#D21312',
+                     ...FONTS.h3 , textAlign:'center'}}>{posts.totalInCome}đ</Text>
                 </View>
             </View>
         )
@@ -308,7 +311,7 @@ const Home1 = ({navigation}) => {
              title={"Home"}
              headerBg={"#60c5a8"}
              iconColor={"black"}
-             back
+             menu
              onRightPress={()=>navigation.navigate("Tabs")}
              optionalBadge={5}
              right="more-vertical"
@@ -323,7 +326,7 @@ const Home1 = ({navigation}) => {
     function renderFeatures(){
         const headerFeature = ()=>(
             <View style={styles.viewFeature}>
-                <View style={{ flex:1 }}><Text>Features</Text></View>
+                <View style={{ flex:1 }}><Text style={{ ...FONTS.h3 }}>Danh mục</Text></View>
                 <View style={styles.viewFeatureHeader}>
                     <TouchableOpacity style={styles.touchTouch1} onPress={()=>navigation.navigate("Adjust")}>
                         <Image source={icons.adjust} style={{ width:20, height:20, }}/>
@@ -337,7 +340,10 @@ const Home1 = ({navigation}) => {
             <TouchableOpacity style={styles.touchFeature} 
                 onPress={()=> navigation.navigate("Edit", {post: 1, post1: 2})}
             >    
-                <View style={{ justifyContent: 'center' }}><Text numberOfLines={1} ellipsizeMode="tail" style={{ width: 70,justifyContent: 'center',alignItems: 'center' }}>{item.category}</Text></View>
+                <View style={{ justifyContent: 'center' }}>
+                <Text numberOfLines={1} ellipsizeMode="tail" style={{ width: 70,justifyContent: 'center',alignItems: 'center' }}>{item.category}
+                </Text>
+                </View>
                 
                 <View style={{ 
                     
@@ -376,12 +382,14 @@ const Home1 = ({navigation}) => {
         return(
             <View style={{ flexDirection:'row',marginVertical: SIZES.padding }}>
                 <View style={{ flex:1 }}>
-                    <Text>HELLO !</Text>
-                    <Text>Sam</Text>
+                    <Text style={{ ...FONTS.hd }}>Xin Chào !</Text>
+                    <Text style={{ ...FONTS.h4 }}>{userInfo.username}</Text>
 
                 </View>
                 <View style={{ alignItems: 'center',  justifyContent: 'center' }}>
-                    <TouchableOpacity style={{ alignItems: 'center',  justifyContent: 'center', height: 40, width:40,backgroundColor:COLORS.white, borderRadius: 20 }}>
+                    <TouchableOpacity 
+                    onPress={()=>navigation.navigate('Profile')}
+                    style={{ alignItems: 'center',  justifyContent: 'center', height: 40, width:40,backgroundColor:COLORS.white, borderRadius: 20 }}>
                         <Image source={icons.uers} style={{ width:20, height:20, }}/>
                     </TouchableOpacity>
                 </View>
@@ -395,6 +403,8 @@ const Home1 = ({navigation}) => {
             {renderHeaderChart()}
             {renderChart()}
             {renderFeatures()}
+
+            <View><Text>Bạn Quan Tâm</Text></View>
             </View>
         )
         
@@ -410,7 +420,6 @@ const Home1 = ({navigation}) => {
                                 source={imgages.onboarding2}
                                 resizeMode="cover"
                                 style={styles.touchImg}
-
                             />
 
 
@@ -515,7 +524,7 @@ const styles = StyleSheet.create({
     },
     textChart:{
         position: "absolute",
-        top: '42%',
+        top: '35%',
         left: '35%',
     },
     touchFlat:{
@@ -524,7 +533,7 @@ const styles = StyleSheet.create({
         width: SIZES.width / 2.5
     },
     touchView1:{
-        height: 80,
+        height: 100,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         backgroundColor: COLORS.blue
@@ -538,10 +547,11 @@ const styles = StyleSheet.create({
 
     },
     touchView2:{
-        padding: SIZES.padding,
+        //padding: SIZES.padding,
         backgroundColor: COLORS.white,
         borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20
+        borderBottomRightRadius: 20,
+        
     },
     headerView:{
         width: '100%',

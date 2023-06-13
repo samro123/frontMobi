@@ -51,7 +51,7 @@ let categoriesData= [
     {
         id: 2,
         name: "Nutrition",
-        color: COLORS.white,
+        color: COLORS.organ,
         expenses:[
             {
                 id: 5,
@@ -293,10 +293,13 @@ const Home = ({navigation}) => {
                 height={SIZES.height * 0.5}
                 />
                 <View style={styles.textChart}>
+                <Text style={{ ...FONTS.h2 }}>Thu Nhập</Text>
                     <Text style={{
-                     color:'black',
-                     ...FONTS.h1 }}>{posts.totalInCome}</Text>
-                    <Text>{posts.totalOutCome}</Text>
+                     color:'#16FF00',
+                     ...FONTS.h1, textAlign:'center' }}>{posts.totalInCome}đ</Text>
+                    <Text style={{
+                     color:'#D21312',
+                 ...FONTS.h3 , textAlign:'center'}}>{posts.totalOutCome}đ</Text>
                 </View>
             </View>
         )
@@ -323,7 +326,7 @@ const Home = ({navigation}) => {
     function renderFeatures(){
         const headerFeature = ()=>(
             <View style={styles.viewFeature}>
-                <View style={{ flex:1 }}><Text>Features</Text></View>
+                <View style={{ flex:1 }}><Text style={{ ...FONTS.h3 }}>Danh mục</Text></View>
                 <View style={styles.viewFeatureHeader}>
                     <TouchableOpacity style={styles.touchTouch1} onPress={()=>navigation.navigate("Adjust")}>
                         <Image source={icons.adjust} style={{ width:20, height:20, }}/>
@@ -376,8 +379,8 @@ const Home = ({navigation}) => {
         return(
             <View style={{ flexDirection:'row',marginVertical: SIZES.padding }}>
                 <View style={{ flex:1 }}>
-                    <Text>HELLO !</Text>
-                    <Text>Sam</Text>
+                    <Text style={{ ...FONTS.hd }}>Xin Chào !</Text>
+                    <Text style={{ ...FONTS.h4 }}>{userInfo.username}</Text>
 
                 </View>
                 <View style={{ alignItems: 'center',  justifyContent: 'center' }}>
@@ -515,7 +518,7 @@ const styles = StyleSheet.create({
     },
     textChart:{
         position: "absolute",
-        top: '42%',
+        top: '35%',
         left: '35%',
         //justifyContent:'center'
     },

@@ -6,7 +6,7 @@ const {COLORS, SIZES, FONTS} = theme;
 
 const LineDiviver = ({lineStyle}) =>{
         return(
-            <View style={{ height: 2, width: "100%",backgroundColor: COLORS.gray, ...lineStyle}}/>
+            <View style={{ height: 1.5, width: "100%",backgroundColor: COLORS.gray, ...lineStyle}}/>
         )
 }
 

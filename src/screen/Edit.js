@@ -18,7 +18,8 @@ import {
   import axios from 'axios';
   import { AuthContext } from '../context/AuthContext'
   import Spinner from 'react-native-loading-spinner-overlay';
-
+  import { TextButton, AppHeader } from "../components";
+ 
 
   const { COLORS, SIZES, FONTS } = theme;
   
@@ -168,7 +169,7 @@ const ModalPoup =({visible, children}) => {
 
    
 
-    const [chooseData, setChooseData] = useState("https://i.ibb.co/BqR903d/stock-market.png")  // thay doi icon 
+    const [chooseData, setChooseData] = useState(post1.icon)  // thay doi icon 
     const [chooseDataColor, setChooseDataColor] = useState(post1.color)// thay doi mau
 
     //api category const
@@ -200,7 +201,7 @@ const ModalPoup =({visible, children}) => {
           let post = res.data;
   
           setLoading(false);
-          navigation.navigate('Home1', {
+          navigation.navigate('Adjust', {
             post: post,
           });
           console.log(res.data);
@@ -225,7 +226,7 @@ const ModalPoup =({visible, children}) => {
           setLoading(false);
           // navigation.goBack();
           console.log(post)
-          navigation.navigate('Home1', {post: post});
+          navigation.navigate('Adjust', {post: post});
         })
         .catch(e => {
           setLoading(false);
@@ -321,23 +322,41 @@ const ModalPoup =({visible, children}) => {
               />
       )
     }
+
+    function renderHeader(){
+      return(
+        <View >
+             <AppHeader
+               title={"Sửa Danh Mục"}
+               headerBg={"#60c5a8"}
+               iconColor={"black"}
+               back
+               onRightPress={()=>navigation.navigate("Adjust")}
+               optionalBadge={5}
+               right="more-vertical"
+               rightFunction={() => console.log('right')}
+               optionalIcon="bell"
+               optionalFunc={() => console.log('optional')}
+              />
+        </View>
+      )
+    }
    
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
         <Spinner visible={loading} />
-          <View style={[styles.box1]}>
-            <Text>Sửa danh mục</Text>
-            
-          </View>
+         <View>
+          {renderHeader()}
+         </View>
   
           <View style={[styles.box2]}>
           <View style={styles.viewText3}>
           <ListItem.Content>
-                  <ListItem.Title>Tên danh mục</ListItem.Title>
+                  <ListItem.Title><Text style={{ ...FONTS.h3 }}>Tên danh mục</Text></ListItem.Title>
                   <TextInput
-                        placeholder="Titel"
-                        style={styles.input}
+                        placeholder="Danh mục" 
+                        style={{ flex: 1, padding: 1, fontSize: 20 }}
                         value={name}
                         onChangeText={val => {
                         setName(val);
@@ -395,31 +414,36 @@ const ModalPoup =({visible, children}) => {
             </View>
   
             <View style={styles.viewText3}>
-              <Text style={styles.text1}>Thêm người dùng ví</Text>
+              <Text style={{color: COLORS.blue, ...styles.text1}}>Thêm danh mục</Text>
             </View>
 
             <TouchableOpacity onPress={deletePost}>
             <View style={styles.viewText3}>
             <Text
-              style={{
-                fontSize: SIZES.h3,
-                marginBottom: 10,
-                color: "red",
-                fontWeight: "700",
-              }}>
-              Xoá ví
-            </Text>
+            style={{
+              fontSize: SIZES.h3,
+              marginBottom: 10,
+              color: "red",
+              fontWeight: "700",
+              ...FONTS.h3
+            }}>
+            Xoá danh mục
+          </Text>
           </View>
             </TouchableOpacity>
             
             <View style={{ flex: 1, alignItems: "flex-end", width: "90%", marginTop:20 }}>
-              <Button  title="Lưu nè" style={{width:100}} onPress={editPost}/>
+              <TextButton 
+                    lable="Lưu"
+                    contentContainerStyle={
+                      styles.btnLogin
+                    }
+                    labelStyle={{ color:COLORS.white , ...FONTS.h3}}
+                    onPress={editPost}
+              />
             </View>
           </View>
   
-          <View style={[styles.box3]}>
-            <Text>Foteer</Text>
-          </View>
         </View>
       </SafeAreaView>
     );
@@ -480,7 +504,7 @@ const ModalPoup =({visible, children}) => {
       tintColor: COLORS.white,
     },
     text1: {
-      fontSize: SIZES.h3,
+      ...FONTS.h3,
       marginBottom: 10,
     },
 
@@ -522,6 +546,15 @@ const ModalPoup =({visible, children}) => {
       borderRadius: 20,
       marginBottom: 10,
       // marginLeft: 55
+},
+
+btnLogin:{
+  height: 50,
+  width:"50%",
+  paddingHorizontal: SIZES.radius,
+  borderRadius: 20,
+  backgroundColor: "#7F3DFF",
+  marginTop: 10
 },
   });
   

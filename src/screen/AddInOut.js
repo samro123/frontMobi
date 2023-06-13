@@ -19,6 +19,8 @@ import {
   import axios from 'axios';
   import { AuthContext } from '../context/AuthContext'
   import Spinner from 'react-native-loading-spinner-overlay';
+  import { AppHeader, TextButton } from "../components";
+  
 
 
 
@@ -288,7 +290,7 @@ const ModalPoup =({visible, children}) => {
         .then(res => {
           let post = res.data;
           setLoading(false);
-          navigation.navigate('Home1', {
+          navigation.navigate('Adjust', {
             post: post,
           });
           console.log(res.data);
@@ -298,23 +300,40 @@ const ModalPoup =({visible, children}) => {
           console.log(`Error on creating post ${e.message}`);
         });
     };
+
+    function renderHeader(){
+      return(
+        <View >
+             <AppHeader
+               title={"Thêm Giao Dịch"}
+               headerBg={"#60c5a8"}
+               iconColor={"black"}
+               back
+               onRightPress={()=>navigation.navigate("Adjust")}
+               optionalBadge={5}
+               right="more-vertical"
+               rightFunction={() => console.log('right')}
+               optionalIcon="bell"
+               optionalFunc={() => console.log('optional')}
+              />
+        </View>
+      )
+    }
   
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
         <Spinner visible={loading} />
-          <View style={[styles.box1]}>
-            <Text>Thêm danh mục</Text>
-            
-          </View>
-  
+        <View >
+          {renderHeader()}
+        </View>
           <View style={[styles.box2]}>
           <View style={styles.viewText3}>
           <ListItem.Content>
-                  <ListItem.Title>Tên danh mục</ListItem.Title>
+                  <ListItem.Title><Text style={{ ...FONTS.h3 }}>Tên danh mục</Text></ListItem.Title>
                   <TextInput
-        placeholder="Titel"
-        style={styles.input}
+        placeholder="Danh mục"
+        style={{ flex: 1, padding: 1, fontSize: 20 }}
         value={name}
         onChangeText={val => {
           setName(val);
@@ -373,21 +392,22 @@ const ModalPoup =({visible, children}) => {
 
               </View>
             </TouchableOpacity>
-              
             </View>
   
-            <View style={styles.viewText3}>
-              <Text style={styles.text1}>Thêm người dùng ví</Text>
-            </View>
   
             <View style={{ flex: 1, alignItems: "flex-end", width: "90%", marginTop:20 }}>
-              <Button  title="Lưu nè" style={{width:100}} onPress={createPost}/>
+              <TextButton 
+                    lable="Thêm"
+                    contentContainerStyle={
+                      styles.btnLogin
+                    }
+                    labelStyle={{ color:COLORS.white , ...FONTS.h2}}
+                    onPress={createPost}
+              />
             </View>
           </View>
   
-          <View style={[styles.box3]}>
-            <Text>Foteer</Text>
-          </View>
+          
         </View>
       </SafeAreaView>
     );
@@ -410,10 +430,10 @@ const ModalPoup =({visible, children}) => {
     //content
     box2: {
       flex: 8,
-      // backgroundColor: "#8BC34A",
-      alignItems: "stretch",
+      //backgroundColor: "#8BC34A",
+      alignItems: "center",
       padding: 30,
-      // justifyContent: "center",
+      justifyContent: "center",
     },
   
     //footer
@@ -448,7 +468,7 @@ const ModalPoup =({visible, children}) => {
       tintColor: COLORS.white,
     },
     text1: {
-      fontSize: SIZES.h3,
+      ...FONTS.h3,
       marginBottom: 10,
     },
 
@@ -490,6 +510,20 @@ const ModalPoup =({visible, children}) => {
       borderRadius: 20,
       marginBottom: 10,
       // marginLeft: 55
+},
+
+btnLogin:{
+  height: 60,
+  width:"50%",
+  paddingHorizontal: SIZES.radius,
+  borderRadius: 10,
+  backgroundColor: "#C780FA",
+  marginTop: 10,
+  borderStyle: 'solid',
+  borderWidth: 10,
+  borderColor:"#E3ACF9",
+
+
 },
   });
   

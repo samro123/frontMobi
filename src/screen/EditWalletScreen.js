@@ -18,6 +18,9 @@ import {BASE_URL} from '../config'
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext'
 import Spinner from 'react-native-loading-spinner-overlay';
+import { ScrollView } from "react-native-gesture-handler";
+import { AppHeader, TextButton } from "../components";
+
 
 
 const { COLORS, SIZES, FONTS } = theme;
@@ -134,7 +137,6 @@ const EditWalletScreen = ({navigation, route}) => {
   //put api
   const editPost = () => {
     setLoading(true);
-
     axios
       .put(
         `${BASE_URL}/wallet/${post.id}`,
@@ -269,23 +271,41 @@ const EditWalletScreen = ({navigation, route}) => {
             />
     )
   }
+  function renderHeader(){
+    return(
+      <View >
+           <AppHeader
+             title={"Sửa ví"}
+             headerBg={"#60c5a8"}
+             iconColor={"black"}
+             back
+             onRightPress={()=>navigation.navigate('Wallet')}
+             optionalBadge={5}
+             right="more-vertical"
+             rightFunction={() => console.log('right')}
+             optionalIcon="bell"
+             optionalFunc={() => console.log('optional')}
+            />
+      </View>
+    )
+  }
  
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
       <Spinner visible={loading} />
-        <View style={[styles.box1]}>
-          <Text>Sửa danh mục</Text>
-          
+        <View >
+          {renderHeader()}
         </View>
-
+       <ScrollView>
         <View style={[styles.box2]}>
         <View style={styles.viewText3}>
         <ListItem.Content>
-                <ListItem.Title>Tên danh mục</ListItem.Title>
+                <ListItem.Title><Text style={{ ...FONTS.h3 }}>Tên ví</Text></ListItem.Title>
                 <TextInput
-                      placeholder="Titel"
-                      style={styles.input}
+                      placeholder="ví"
+                      style={{ flex: 1, padding: 1, fontSize: 20 }}
+                      placeholderTextColor="grey"
                       value={name}
                       onChangeText={val => {
                       setName(val);
@@ -297,10 +317,11 @@ const EditWalletScreen = ({navigation, route}) => {
 
           <View style={styles.viewText3}>
         <ListItem.Content>
-                <ListItem.Title>Tiền</ListItem.Title>
+                <ListItem.Title><Text style={{ ...FONTS.h3 }}>Số tiền</Text></ListItem.Title>
                 <TextInput
-                      placeholder="Titel"
-                      style={styles.input}
+                      placeholder="0 đ"
+                      style={{ flex: 1, padding: 1, fontSize: 20 }}
+                      placeholderTextColor="grey"
                       value={amount}
                       onChangeText={val => {
                       setAmount(val);
@@ -356,10 +377,11 @@ const EditWalletScreen = ({navigation, route}) => {
           </TouchableOpacity>
             
           </View>
-
+          <TouchableOpacity onPress={()=>navigation.navigate("AddWalletScreen")}>
           <View style={styles.viewText3}>
-            <Text style={styles.text1}>Thêm người dùng ví</Text>
+            <Text style={{color: COLORS.blue, ...styles.text1}}>Thêm người dùng ví</Text>
           </View>
+          </TouchableOpacity>
 
           <TouchableOpacity onPress={deletePost}>
           <View style={styles.viewText3}>
@@ -369,6 +391,7 @@ const EditWalletScreen = ({navigation, route}) => {
               marginBottom: 10,
               color: "red",
               fontWeight: "700",
+              ...FONTS.h2
             }}>
             Xoá ví
           </Text>
@@ -376,10 +399,17 @@ const EditWalletScreen = ({navigation, route}) => {
           </TouchableOpacity>
           
           <View style={{ flex: 1, alignItems: "flex-end", width: "90%", marginTop:20 }}>
-            <Button  title="Lưu nè" style={{width:100}} onPress={editPost}/>
+            <TextButton 
+                    lable="Lưu"
+                    contentContainerStyle={
+                      styles.btnLogin
+                    }
+                    labelStyle={{ color:COLORS.white , ...FONTS.h2}}
+                    onPress={editPost}
+              />
           </View>
         </View>
-
+        </ScrollView>
         <View style={[styles.box3]}>
           <Text>Foteer</Text>
         </View>
@@ -443,8 +473,8 @@ const styles = StyleSheet.create({
     tintColor: COLORS.white,
   },
   text1: {
-    fontSize: SIZES.h3,
     marginBottom: 10,
+    ...FONTS.h3
   },
 
   modalBackGround:{
@@ -485,5 +515,14 @@ viewIcon2:{
     borderRadius: 20,
     marginBottom: 10,
     // marginLeft: 55
+},
+
+btnLogin:{
+  height: 50,
+  width:"50%",
+  paddingHorizontal: SIZES.radius,
+  borderRadius: 10,
+  backgroundColor: "#7F3DFF",
+  marginTop: 10
 },
 });
